@@ -56,7 +56,8 @@ export default {
 }
 
 .support-title {
-  font-size: 24px;
+  font-family: 'MonaspaceKryptonSWE';
+  font-size: 30px;
   color: #333;
   margin-bottom: 10px;
 }

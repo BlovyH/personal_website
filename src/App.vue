@@ -3,7 +3,11 @@
     <div v-if="!isLoading">
       <LanguageSwitcher />
 
-      <h1 class="page-title">BlovyH</h1>
+      <h1 class="page-title">Blovy</h1>
+      <div class="greetings">
+        <h3>{{ $t('greetings') }}</h3>
+      </div>
+
       <div class="navigation">
         <div class="divider"></div>
         <nav class="navigation-bar">
@@ -21,6 +25,7 @@
         </div>
 
         <div class="right-content">
+          <CommentBlock />
           <SupportMe />
           <h2>{{ $t('achievements') }}</h2>
           <div class="achievements-grid" ref="achievementsGrid" @mouseleave="achievementsOnMouseLeave">
@@ -42,11 +47,12 @@ import { ElLoading } from 'element-plus'
 import { mapGetters } from 'vuex'
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
 import AchievementBlock from './components/AchievementBlock.vue'
+import CommentBlock from './components/CommentBlock.vue'
 import SupportMe from './components/SupportMe.vue'
 import FooterBlock from './components/FooterBlock.vue'
 
 export default {
-  components: { LanguageSwitcher, AchievementBlock, SupportMe, FooterBlock },
+  components: { LanguageSwitcher, AchievementBlock, CommentBlock, SupportMe, FooterBlock },
   setup() {
     // loading animation
     const isLoading = ref(true)
@@ -110,7 +116,6 @@ export default {
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
   background-color: #1b2838;
   color: white;
 }
@@ -120,6 +125,12 @@ body {
   flex-direction: column;
   height: 100vh;
   padding: 20px;
+}
+
+.greetings {
+  position: absolute;
+  top: 35px;
+  right: 20px;
 }
 
 .divider {
@@ -171,7 +182,6 @@ body {
 
 .left-content {
   flex: 0 0 60%;
-  padding-right: 20px;
 }
 
 .right-content {
