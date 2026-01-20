@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="蓝碱 | Blovy | らんけん - illustrator, back-end programmer">
+    <meta name="keywords" content="Blovy, 蓝碱, らんけん, illustration, monthlies">
+    <title>Blovy - Under Construction</title>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "蓝碱 | Blovy | らんけん - illustrator, back-end programmer",
+            "url": "https://blovy.art",
+            "description": "蓝碱 | Blovy | らんけん - illustrator, back-end programmer",
+            "author": {
+                "@type": "Person",
+                "name": "蓝碱"
+            }
+        }
+    </script>
+
+    <style>
+        @font-face {
+            font-family: "fusion-pixel-12px";
+            src: url(https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.7.0/personal_website/fonts/fusion-pixel-12px-monospaced-zh_hans.ttf);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "fusion-pixel-12px", sans-serif;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2a3a4d;
+            color: #e0e7ff;
+            padding: 50px;
+        }
+
+        .header-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            text-align: left;
+            z-index: 100;
+        }
+
+        .name-chinese {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+
+        .name-rest {
+            font-size: 0.9rem;
+            color: #a0aec0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            margin-top: 80px;
+        }
+
+        .construction-text {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0aec0;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e0e7ff;
+            margin-bottom: 20px;
+            align-self: flex-start;
+            margin-left: 10px;
+        }
+
+        .cards-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            background: #3a4a5d;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .card-content {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+        }
+
+        .card-subtitle {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            margin-bottom: 3px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 0.85rem;
+            color: #cbd5e0;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .bookmark-tag {
+            position: absolute;
+            top: 5px;
+            right: -10px;
+            background: #2c62a9;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            }
+            
+            .thumbnail {
+                height: 220px;
+            }
+            
+            .construction-text {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .thumbnail {
+                height: 220px;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #a0aec0;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+
+        /* 微信表情包开始 */
+        .wechat-sticker-container {
+            position: absolute;
+            right: 20px;
+            top: 100px;
+            text-align: right;
+            transform: translateY(-50%);
+            display: inline-block;
+            background: rgba(42, 58, 77, 0.9);
+            border: 1px solid #e0e7ff;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .wechat-sticker-container:hover {
+            background: rgba(58, 74, 93, 0.95);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .sticker-desc {
+            display: block;
+            font-size: 0.7rem;
+            color: #a0aec0;
+            text-align: center;
+        }
+
+        .sticker-preview {
+            position: absolute;
+            top: 100%;
+            margin-top: 10px;
+            right: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            width: 200px;
+            height: 350px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+            overflow: hidden;
+            z-index: 1001;
+        }
+
+        .sticker-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .sticker-qrcode {
+            position: absolute;
+            top: 100%;
+            margin-top: 10px;
+            right: 210px;
+            width: 110px;
+            height: 110px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(15px);
+            transition: all 0.3s ease 0.08s;
+        }
+
+        .sticker-qrcode img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .wechat-sticker-container:hover .sticker-qrcode,
+        .wechat-sticker-container:hover .sticker-preview {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        /* 微信表情包结束 */
+
+
+        /* 音标 Tooltip 开始 */
+        .name-general-span {
+            position: relative;
+            display: inline-block;
+        }
+
+        .name-general-tooltip {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            background: rgba(58, 74, 93, 0.95);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 1000;
+            border: 1px solid #e0e7ff;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .name-general-span:hover .name-general-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-10px);
+        }
+        /* 音标 Tooltip 结束 */
+
+
+        /* 成就浮框开始 */
+        .achievement-notification {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            background: #000;
+            border-radius: 22px;
+            font-size: 0.9rem;
+            z-index: -1; /* 不要影响其他交互 */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            max-width: 340px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+
+            /* 9-patch fixed area (urdl) */
+            border-width: 5px 6px;
+            border-style: solid;
+            border-color: transparent;
+            border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.5/personal_website/ui/button_bg.png');
+            border-image-width: 20px;
+            /* 9-patch streched area (urdl) */
+            border-image-slice: 6 6 5 6 fill;
+            border-image-repeat: repeat;
+            padding: 8px 10px 12px 5px;
+            box-sizing: border-box;
+            transition: 0.2s;
+            image-rendering: pixelated;
+        }
+
+        .achievement-notification strong {
+            color: #5cd6d6;
+        }
+
+        .achievement-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 9999;
+        }
+
+        .notification-text {
+            line-height: 1.4;
+        }
+        /* 成就浮框结束 */
+    </style>
+</head>
+
+<body>
+    <div class="header-info">
+        <div class="name-chinese" style="font-size: 1.5rem;">蓝碱</div>
+        <div class="name-rest" style="font-size: 1.1rem; margin-top: 5px;">
+            <span>らんけん</span>
+            <span>/</span>
+            <span class="name-general-span">
+                Blovy
+                <span class="name-general-tooltip">[ˈblɒvi] / ブロビー</span>
+            </span>
+        </div>
+        <div class="job-title" style="font-size: 0.9rem; color: #718096; margin-top: 5px;">
+            illustrator, back-end programmer
+        </div>
+    </div>
+
+    <div id="achievement-notification" class="achievement-notification">
+        <div class="notification-text">
+            <strong>【获得成就！】</strong> 这个怎么念？<br>
+            <strong>【進捗達成!】</strong> なにこれ、読み方?<br>
+            <strong>&nbsp;[Achievement get!]</strong> Check the pronunciation
+        </div>
+    </div>
+
+    <div class="multi-lang-info" style="position: fixed; top: 20px; right: 20px; font-size: 0.7rem; color: #718096; text-align: right; z-index: 100;">
+        There will be a button for<br>
+        multi-langs(English, Japanese)<br>
+        translations by myself.<br>
+        <small>にほんごはまだまだです。よろしくおねがいします。</small>
+    </div>
+
+    <div class="main-content">
+        <h3 class="construction-text">このページは準備中です。</h3>
+        <p class="subtitle">PAGE UNDER CONSTRUCTION...</p>
+        
+        <div class="wechat-sticker-container">
+            <div style="display: flex;">
+                <img src="pics/ahogeneko_thumb.png" alt="WeChat Stickers Thumbnail" style="height: 30px; text-align: left;">
+                <div>            
+                    <span class="sticker-trigger">微信表情包</span>
+                    <div style="font-size: 0.8rem; color: #a0aec0; ">WeChat Stickers</div>
+                </div>
+            </div>
+            <div class="sticker-dropdown">
+                <div class="sticker-preview">
+                    <img src="pics/ahogeneko_preview.png" alt="WeChat Stickers QRCode">
+                </div>
+                <div class="sticker-qrcode">
+                    <img src="pics/ahogeneko_qrcode.png" alt="WeChat Stickers Preview">
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">Monthlies</h2>
+        <div style="font-size: 0.9rem; color: #a0aec0; margin-top: -10px; margin-bottom: 20px;">Click for high-res</div>
+
+        <div class="cards-container">
+            <a href="https://blovy.art/gallery/monthlies/2512.png" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="2512.png" alt="2512" class="thumbnail">
+                <div class="card-content">
+                    <div class="card-subtitle">2025 DECEMBER</div>
+                    <h3 class="card-title">心 #0</h3>
+                    <p class="card-description"><br><br></p>
+                </div>
+            </div>
+            </a>
+            
+            <a href="https://blovy.art/gallery/monthlies/2511.png" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="2511.png" alt="2511" class="thumbnail">
+                <div class="card-content">
+                    <div class="card-subtitle">2025 NOVEMBER</div>
+                    <h3 class="card-title">ARCAEA NEXT STAGE!</h3>
+                    <p class="card-description">#同人 #ARCAEA <br><br></p>
+                </div>
+            </div>
+            </a>
+            
+            <a href="https://blovy.art/gallery/monthlies/2510.png" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="2510.png" alt="2510" class="thumbnail">
+                <div class="card-content">
+                    <div class="card-subtitle">2025 OCTOBER</div>
+                    <h3 class="card-title">HAPPY HALLOWEEN</h3>
+                    <p class="card-description"><br><br></p>
+                </div>
+            </div>
+            </a>
+            
+            <a href="https://blovy.art/monthlies/2509" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="2509.png" alt="2509" class="thumbnail">
+                <div class="card-content">
+                    <div class="card-subtitle">2025 SEPTEMBER</div>
+                    <h3 class="card-title">山气日夕佳，飞鸟相与还</h3>
+                    <p class="card-description">#同人 #光が死んだ夏 #アニメ放送終了<br></p>
+                    <div class="bookmark-tag">同人文章・コメント</div>
+                </div>
+            </div>
+            </a>
+            
+            <a href="https://blovy.art/gallery/monthlies/2508.png" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="2508.png" alt="2508" class="thumbnail">
+                <div class="card-content">
+                    <div class="card-subtitle">2025 AUGUST</div>
+                    <h3 class="card-title">NIGHTWAVE FRAGMENTS</h3>
+                    <p class="card-description">#同人 #よふかしのうた #アニメS2放送終了</p>
+                </div>
+            </div>
+            </a>
+            
+            <a href="https://blovy.art/gallery/monthlies/2504.png" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="2504.png" alt="2504" class="thumbnail">
+                <div class="card-content">
+                    <div class="card-subtitle">2025 APRIL</div>
+                    <h3 class="card-title">小憩</h3>
+                    <p class="card-description">#同人 #时光代理人 #4th Anniversary</p>
+                </div>
+            </div>
+            </a>
+            
+            <a href="https://blovy.art/gallery/monthlies/2502.png" target="_blank" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="2502.png" alt="2502" class="thumbnail">
+                <div class="card-content">
+                    <div class="card-subtitle">2025 FEBRUARY</div>
+                    <h3 class="card-title">新年快乐</h3>
+                    <p class="card-description"><br><br></p>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        ©Blovy/蓝碱 2026 All Rights Reserved.
+        <address>Contact: blovysol@gmail.com (Chinese/English please)</address>
+        <div class="contact-links" style="margin: 10px; font-size: 0.85rem; color: #a0aec0;">
+            <a href="https://twitter.com/blovyh" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">X</a> |
+            <a href="https://bsky.app/profile/blovy" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">BlueSky</a> |
+            <a href="https://space.bilibili.com/160911011" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">bilibili</a> |
+            <a href="https://www.pixiv.net/users/118581129" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">Pixiv</a> |
+            <a href="https://medibang.com/u/Blovy/" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">ArtStreet</a> |
+            <a href="https://www.xiaohongshu.com/user/profile/670bdcfc000000001d0300c7" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">小红书</a>
+        </div>
+        <div>
+            <a href="https://github.com/TakWolf/fusion-pixel-font" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">Font: fusion-pixel-12px</a>
+        </div>
+
+        <div class="tools" style="padding-top: 20px; margin: 10px; font-size: 0.85rem; color: #737e8d;">
+            Code, Build and Deployment Support:
+            <a href="https://vuejs.org/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">VUE3(testing)</a> |
+            <a href="https://nginx.org/en/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Nginx</a> |
+            <a href="https://www.cloudflare.com/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Cloudflare</a>
+        </div>
+        <div class="tools" style="margin: 10px; font-size: 0.85rem; color: #737e8d;">
+            Programs and IDEs:
+            <a href="https://medibangpaint.com/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Medibang</a>,
+            <a href="https://www.aseprite.org/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">aseprite</a> |
+            <a href="https://www.singlecellsoftware.com/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Caustic 3</a>,
+            <a href="https://strudel.cc/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Strudel(testing)</a> |
+            <a href="https://code.visualstudio.com/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">VSCode</a>,
+            <a href="https://www.jetbrains.com/idea/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">IntelliJ IDEA</a>
+        </div>
+    </div>
+
+    <div class="bottom-right-note" style="position: fixed; bottom: 10px; right: 10px; font-size: 0.7rem; color: #718096; z-index: 100; text-align: right;">
+        ここでサボるー<br>
+        いや、ばれちゃった
+    </div>
+
+    <!-- easter egg start -->
+    <script>
+        // console easter egg start
+
+        console.log(`%c
+        ██╗  ██╗███████╗██╗     ██╗      ██████╗ 
+        ██║  ██║██╔════╝██║     ██║     ██╔═══██╗
+        ███████║█████╗  ██║     ██║     ██║   ██║
+        ██╔══██║██╔══╝  ██║     ██║     ██║   ██║
+        ██║  ██║███████╗███████╗███████╗╚██████╔╝
+        ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ ╚═════╝ 
+        %cHello, Developer! 👋 
+        %cNice to meet you here.
+        %cI'm Blovy/蓝碱 - Illustrator & Back-End Dev
+        %cGitHub: https://github.com/BlovyH`, 
+        'color:#718096;font-size:14px;', 
+        'font-family:monospace;color:#a0aec0;font-size:12px;', 
+        'font-family:monospace;color:#a0aec0;font-size:12px;', 
+        'font-family:monospace;color:#a0aec0;font-size:12px;',
+        'font-family:monospace;color:#a0aec0;font-size:12px;'
+        )
+
+        // console easter egg end
+
+
+        // neta 成就彩蛋
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerInfo = document.querySelector('.header-info');
+            const achievementNotification = document.getElementById('achievement-notification');
+            let hoverTimer;
+            
+            // local storage 防止重复触发
+            const hasAchieved = localStorage.getItem('pronunciation-achievement');
+
+            headerInfo.addEventListener('mouseenter', function() {
+                // 本来想在这里预加载音效（在第一次达成触发条件时就加载，尽可能避免无效加载的同时避免加载失败）但是现代浏览器不允许这样做：The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page.
+
+                // 可能可以通过 iframe 等方式解决，参考那些一进去就自动播放BGM的网页，但是太麻烦了，不搞了，之后如果网页能保证用户在这个hover前一定会有一次交互，再说
+
+                if (!hasAchieved) {
+                    hoverTimer = setTimeout(() => {
+                        achievementNotification.classList.add('show');
+                        
+                        setTimeout(() => {
+                            achievementNotification.classList.remove('show');
+                            
+                            localStorage.setItem('pronunciation-achievement', 'true');
+                        }, 5000); // 5秒后隐藏
+
+                        // 控制台记录 log（就是rpg那种对话记录之类的防skip的东西啦）
+                        console.log(achievementNotification.textContent)
+                    }, 2222);
+                }
+            });
+    
+            // ! 清除延迟定时器
+            headerInfo.addEventListener('mouseleave', function() {
+                if (hoverTimer) {
+                    clearTimeout(hoverTimer);
+                    hoverTimer = null;
+                }
+            });
+        });
+    </script>
+    <!-- easter egg end -->
+
+
+    <!------------------------------------------->
+    <!------------------------------------------->
+    <!------------------------------------------->
+
+    <!-- 新增简单播放器开始（临时，后续封装成组件） -->
+    <div class="playlist-container">
+        <div class="playlist-header" id="playlistHeader">
+            <span class="playlist-title">Tracks(demo)</span>
+            <span class="playlist-toggle" id="playlistToggle">▼</span>
+        </div>
+        <div class="playlist-content" id="playlistContent">
+            <div class="playlist-tracks">
+                <div class="track-item active" data-src="https://s17.aconvert.com/convert/p3r68-cdx67/h7kgd-aew7b.mp3">
+                    <span class="track-name">Chill (2021.2)</span>
+                </div>
+                <div class="track-item" data-src="https://s19.aconvert.com/convert/p3r68-cdx67/f87cm-5ppie.mp3">
+                    <span class="track-name">NightSky (2021.12)</span>
+                </div>
+                <div class="track-item" data-src="https://s19.aconvert.com/convert/p3r68-cdx67/h8w0p-jv0vp.mp3">
+                    <span class="track-name">Trip (2021.4)</span>
+                </div>
+                <div class="track-item" data-src="https://s33.aconvert.com/convert/p3r68-cdx67/bs08b-vsw50.mp3">
+                    <span class="track-name">Snowflake (???)</span>
+                </div>
+                <div class="track-item" data-src="https://s17.aconvert.com/convert/p3r68-cdx67/yo14i-47lqb.mp3">
+                    <span class="track-name">meme (2020.7)</span>
+                </div>
+                <!-- <div class="track-item" data-src="11111">
+                    <span class="track-name">errortest</span>
+                </div> -->
+            </div>
+            <div class="progress-container">
+                <span class="time-display current-time">0:00</span>
+                <div class="progress-bar">
+                    <div class="progress-loaded"></div>
+                    <div class="progress-played"></div>
+                    <div class="progress-handle" id="progressHandle"></div>
+                </div>
+                <span class="time-display total-time">0:00</span>
+            </div>
+            <div class="playlist-controls">
+                <button class="control-btn" id="prevBtn">⏮</button>
+                <button class="control-btn" id="playPauseBtn">▶</button>
+                <button class="control-btn" id="nextBtn">⏭</button>
+                <button class="control-btn" id="loopBtn">loop</button>
+            </div>
+            <audio id="audioPlayer"></audio>
+        </div>
+    </div>
+    
+    <style>
+    .playlist-container {
+        position: fixed;
+        bottom: 50px;
+        right: 20px;
+        width: 300px;
+        background: #3a4a5d;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        z-index: 1000;
+        font-family: "fusion-pixel-12px", sans-serif;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .playlist-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        background: #2c62a9;
+        border-radius: 0; /* 跟随容器 */
+        cursor: pointer;
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    .playlist-title {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .playlist-toggle {
+        transition: transform 0.3s ease;
+    }
+    
+    .playlist-content {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 15px;
+        background: #3a4a5d;
+        border-radius: 0 0 12px 12px;
+        transition: all 0.3s ease;
+    }
+
+    .playlist-content::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .playlist-tracks {
+        margin-bottom: 15px;
+    }
+    
+    .track-item {
+        padding: 8px;
+        border-bottom: 1px solid #4a5a6d;
+        cursor: pointer;
+        color: #cbd5e0;
+        font-size: 1rem;
+    }
+    
+    .track-item.active {
+        color: #ffffff;
+        background: #2c5282;
+        border-radius: 4px;
+    }
+    
+    .track-item:last-child {
+        border-bottom: none;
+    }
+    
+    .playlist-controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .control-btn {
+        background: #4a5a6d;
+        border: none;
+        color: white;
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .control-btn:hover {
+        background: #5a6a7d;
+    }
+    
+    .control-btn:active {
+        transform: scale(0.95);
+    }
+    
+    .playlist-content.hidden {
+        /* 直接这么写会立即隐藏，动画出不来 */
+        /* display: none; */
+        max-height: 0;
+        padding: 0 15px;
+        opacity: 0;
+        overflow: hidden;
+    }
+    
+    .playlist-header.expanded .playlist-toggle {
+        transform: rotate(180deg);
+    }
+
+    .loading-spinner {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .error-message {
+        font-size: 0.7rem;
+        color: #fed7d7;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .progress-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+        margin-bottom: 12px;
+    }
+
+    .time-display {
+        font-size: 0.7rem;
+        color: #cbd5e0;
+        min-width: 40px;
+        text-align: center;
+    }
+
+    .progress-bar {
+        flex: 1;
+        height: 4px;
+        background: #4a5a6d;
+        border-radius: 2px;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .progress-loaded {
+        position: absolute;
+        height: 100%;
+        background: #718096;
+        width: 0%;
+        left: 0;
+    }
+
+    .progress-played {
+        position: absolute;
+        height: 100%;
+        background: #e0e7ff;
+        width: 0%;
+        left: 0;
+    }
+
+    .progress-handle {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: white;
+        border: 2px solid #2c62a9;
+        border-radius: 50%;
+        top: 50%;
+        left: 0%;
+        transform: translate(-50%, -50%);
+        cursor: grab;
+        z-index: 10;
+    }
+
+    .progress-handle.dragging {
+        cursor: grabbing;
+    }
+
+    /* 移动端默认折叠 */
+    @media (max-width: 768px) {
+        .playlist-container {
+            width: calc(100% - 40px);
+            max-width: 300px;
+            right: 20px;
+        }
+        
+        .playlist-content:not(.hidden) {
+            display: block;
+        }
+    }
+    </style>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取DOM元素
+        const playlistHeader = document.getElementById('playlistHeader');
+        const playlistContent = document.getElementById('playlistContent');
+        const playlistToggle = document.getElementById('playlistToggle');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const trackItems = document.querySelectorAll('.track-item');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const loopBtn = document.getElementById('loopBtn');
+        const playlistTitle = document.querySelector('.playlist-title');
+        const currentTimeDisplay = document.querySelector('.current-time');
+        const totalTimeDisplay = document.querySelector('.total-time');
+        const progressBar = document.querySelector('.progress-bar');
+        const progressPlayed = document.querySelector('.progress-played');
+        const progressLoaded = document.querySelector('.progress-loaded');
+        
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let isLooping = false;
+        let isDragging = false;
+        
+        // 移动端默认隐藏，桌面端默认显示
+        if (window.innerWidth <= 768) {
+            playlistContent.classList.add('hidden');
+            playlistHeader.classList.remove('expanded');
+        } else {
+            playlistContent.classList.remove('hidden');
+            playlistHeader.classList.add('expanded');
+        }
+
+        // 显示加载状态
+        function showLoading() {
+            playlistTitle.innerHTML = '<span class="loading-spinner"></span> Loading...';
+        }
+        
+        // 隐藏加载状态
+        function hideLoading() {
+            playlistTitle.innerHTML = 'Tracks(demo)';
+        }
+        
+        // 显示错误信息
+        function showError(msg) {
+            playlistTitle.innerHTML = `Tracks(demo) <span class="error-message">${msg}</span>`;
+            setTimeout(() => {
+                hideLoading();
+            }, 5000);
+        }
+        
+        // 切换播放列表显示/隐藏
+        playlistHeader.addEventListener('click', function() {
+            playlistContent.classList.toggle('hidden');
+            playlistHeader.classList.toggle('expanded');
+            playlistToggle.textContent = playlistContent.classList.contains('hidden') ? '▶' : '▼';
+        });
+        
+        // 播放指定曲目
+        function playTrack(index) {
+            if (index >= 0 && index < trackItems.length) {
+                // 更新当前曲目
+                currentTrackIndex = index;
+                
+                // 更新激活状态
+                trackItems.forEach((item, i) => {
+                    if (i === currentTrackIndex) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+
+                // 显示加载状态
+                showLoading();
+                
+                // 设置音频源并播放
+                const trackSrc = trackItems[currentTrackIndex].dataset.src;
+                audioPlayer.src = trackSrc;
+
+                // 监听加载完成
+                audioPlayer.oncanplaythrough = function() {
+                    hideLoading();
+                };
+                
+                // 监听加载错误
+                audioPlayer.onerror = function() {
+                    showError('Failed to load track');
+                    playPauseBtn.textContent = '▶';
+                };
+
+                audioPlayer.play()
+                    .then(() => {
+                        isPlaying = true;
+                        playPauseBtn.textContent = '⏸';
+                        hideLoading();
+                        
+                        // 重置进度条
+                        progressPlayed.style.width = '0%';
+                        progressHandle.style.left = '0%';
+                        currentTimeDisplay.textContent = '0:00';
+                    })
+                    .catch(e => {
+                        console.error('播放失败:', e);
+                        showError('Play failed');
+                    });
+            }
+        }
+        
+        // 监听播放/暂停按钮
+        playPauseBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                playPauseBtn.textContent = '▶';
+            } else {
+                if (!audioPlayer.src) {
+                    playTrack(currentTrackIndex);
+                } else {
+                    audioPlayer.play();
+                    isPlaying = true;
+                    playPauseBtn.textContent = '⏸';
+                }
+            }
+        });
+        
+        // 下一首
+        nextBtn.addEventListener('click', function() {
+            let nextIndex = (currentTrackIndex + 1) % trackItems.length;
+            playTrack(nextIndex);
+        });
+        
+        // 上一首
+        prevBtn.addEventListener('click', function() {
+            let prevIndex = (currentTrackIndex - 1 + trackItems.length) % trackItems.length;
+            playTrack(prevIndex);
+        });
+        
+        // 循环播放
+        loopBtn.addEventListener('click', function() {
+            isLooping = !isLooping;
+            audioPlayer.loop = isLooping;
+            loopBtn.style.background = isLooping ? '#2c5282' : '#4a5a6d';
+        });
+        
+        // 曲目点击事件
+        trackItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                playTrack(index);
+            });
+        });
+        
+        // 音频结束自动播放下一首
+        audioPlayer.addEventListener('ended', function() {
+            if (isLooping) {
+                audioPlayer.currentTime = 0;
+                audioPlayer.play();
+            } else {
+                let nextIndex = (currentTrackIndex + 1) % trackItems.length;
+                playTrack(nextIndex);
+            }
+        });
+
+        // 时间格式化函数
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // 更新进度条
+        function updateProgress() {
+            if (audioPlayer.duration) {
+                const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                if (!isDragging) {
+                    progressPlayed.style.width = `${percent}%`;
+                    progressHandle.style.left = `${percent}%`;
+                }
+                currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+                totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+            }
+        }
+
+        // 更新已加载进度
+        function updateBuffer() {
+            if (audioPlayer.buffered.length > 0) {
+                const bufferedEnd = audioPlayer.buffered.end(audioPlayer.buffered.length - 1);
+                const duration = audioPlayer.duration;
+                const percent = (bufferedEnd / duration) * 100;
+                progressLoaded.style.width = `${percent}%`;
+            }
+        }
+
+        // 点击进度条跳转
+        progressBar.addEventListener('click', function(e) {
+            if (!isDragging) {
+                const rect = this.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                const newTime = pos * audioPlayer.duration;
+                
+                // 直接设置播放时间
+                audioPlayer.currentTime = newTime;
+                
+                // 手动更新小圆点位置
+                const percent = (newTime / audioPlayer.duration) * 100;
+                progressPlayed.style.width = `${percent}%`;
+                progressHandle.style.left = `${percent}%`;
+                currentTimeDisplay.textContent = formatTime(newTime);
+            }
+        });
+
+        // 拖拽进度条处理
+        progressHandle.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', dragProgress);
+        document.addEventListener('mouseup', stopDrag);
+
+        function startDrag(e) {
+            isDragging = true;
+            progressHandle.classList.add('dragging');
+            e.preventDefault();
+        }
+
+        function dragProgress(e) {
+            if (!isDragging) return;
+            
+            const rect = progressBar.getBoundingClientRect();
+            let pos = (e.clientX - rect.left) / rect.width;
+            pos = Math.max(0, Math.min(1, pos));
+            
+            progressPlayed.style.width = `${pos * 100}%`;
+            progressHandle.style.left = `${pos * 100}%`;
+        }
+
+        function stopDrag() {
+            if (isDragging) {
+                isDragging = false;
+                progressHandle.classList.remove('dragging');
+                
+                // 在释放鼠标时才真正改变播放时间
+                const rect = progressBar.getBoundingClientRect();
+                const pos = (progressHandle.getBoundingClientRect().left - rect.left) / rect.width;
+                const newTime = pos * audioPlayer.duration;
+                
+                // 设置播放时间
+                audioPlayer.currentTime = newTime;
+                
+                // 更新时间显示
+                currentTimeDisplay.textContent = formatTime(newTime);
+            }
+        }
+
+        // 监听音频事件
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        audioPlayer.addEventListener('progress', updateBuffer);
+        audioPlayer.addEventListener('loadedmetadata', function() {
+            totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+        });
+        
+        // 窗口大小改变时调整显示状态
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768) {
+                playlistContent.classList.add('hidden');
+                playlistHeader.classList.remove('expanded');
+                playlistToggle.textContent = '▶';
+            } else {
+                playlistContent.classList.remove('hidden');
+                playlistHeader.classList.add('expanded');
+                playlistToggle.textContent = '▼';
+            }
+        });
+    });
+    </script>
+
+    <!-- 新增简单播放器结束（临时，后续封装成组件） -->
+
+    <!------------------------------------------->
+    <!------------------------------------------->
+    <!------------------------------------------->
+</body>
+</html>
