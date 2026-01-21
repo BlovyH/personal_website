@@ -571,23 +571,21 @@
             const headerInfo = document.querySelector('.header-info');
             const achievementNotification = document.getElementById('achievement-notification');
             let hoverTimer;
-            
-            // local storage 防止重复触发
-            const hasAchieved = localStorage.getItem('pronunciation-achievement');
 
             headerInfo.addEventListener('mouseenter', function() {
                 // 本来想在这里预加载音效（在第一次达成触发条件时就加载，尽可能避免无效加载的同时避免加载失败）但是现代浏览器不允许这样做：The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page.
 
                 // 可能可以通过 iframe 等方式解决，参考那些一进去就自动播放BGM的网页，但是太麻烦了，不搞了，之后如果网页能保证用户在这个hover前一定会有一次交互，再说
 
+                // local storage 防止重复触发 这里强制每次都重新获取，生产环境有缓存问题，要刷新才会重新获取
+                const hasAchieved = localStorage.getItem('pronunciation-achievement');
                 if (!hasAchieved) {
                     hoverTimer = setTimeout(() => {
+                        localStorage.setItem('pronunciation-achievement', 'true');
                         achievementNotification.classList.add('show');
                         
                         setTimeout(() => {
                             achievementNotification.classList.remove('show');
-                            
-                            localStorage.setItem('pronunciation-achievement', 'true');
                         }, 5000); // 5秒后隐藏
 
                         // 控制台记录 log（就是rpg那种对话记录之类的防skip的东西啦）
