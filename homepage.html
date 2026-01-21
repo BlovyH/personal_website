@@ -269,6 +269,7 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.4);
             overflow: hidden;
             opacity: 0;
+            visibility: hidden;
             transform: translateX(15px);
             transition: all 0.3s ease 0.08s;
         }
@@ -283,7 +284,7 @@
         .wechat-sticker-container:hover .sticker-preview {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
+            transform: translateY(0); /* 过渡动画需要明确的端点目标值 */
         }
         /* 微信表情包结束 */
 
