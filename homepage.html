@@ -1077,6 +1077,12 @@
                 isPlaying = false;
                 playPauseBtn.textContent = '▶';
             } else {
+                // 播放失败切回停止状态
+                if (audioPlayer.error) {
+                    playPauseBtn.textContent = '▶';
+                    isPlaying = false;
+                    return;
+                }
                 if (!audioPlayer.src) {
                     playTrack(currentTrackIndex);
                 } else {
