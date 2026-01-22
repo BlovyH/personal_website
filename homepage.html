@@ -591,6 +591,14 @@
                 <strong>&nbsp;[Achievement get!]</strong> Hello developer!
                 `,
             },
+            'rhythm_gamer': {
+                name: 'achievement_rhythm_gamer',
+                description: `
+                <strong>【获得成就！】</strong> 什么音游玩家<br>
+                <strong>【進捗達成!】</strong> あれ、音ゲーマーかな<br>
+                <strong>&nbsp;[Achievement get!]</strong> Oh wow RHYTHM GAMER
+                `,
+            }
         };
 
 
@@ -627,6 +635,49 @@
                     triggerAchievement('developer');
                 }
             })
+
+
+            // 3. 音ゲー
+            let clicks = 0;
+            let clickTimeout;
+            let lastClickTime = 0;
+            const requiredClicks = 7;
+            const clickInterval = 2222;
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const hasMultiClickAchievement = localStorage.getItem('multi-click-achievement');
+            
+            if (!hasMultiClickAchievement) {
+                // 条件：1. 达到所需点击次数 2. 处于播放状态
+                document.addEventListener('click', function(event) {
+                    // 播放状态就形式主义地检查一下吧...
+                    if (!playPauseBtn || playPauseBtn.textContent !== '⏸') {
+                        return;
+                    }
+                    
+                    // 上次点击时间超过窗口时间，重置计数
+                    const currentTime = Date.now();
+                    if (currentTime - lastClickTime > clickInterval) {
+                        clicks = 0;
+                    }
+                    
+                    clicks++;
+                    lastClickTime = currentTime;
+                    
+                    // ！清除之前的定时器
+                    if (clickTimeout) {
+                        clearTimeout(clickTimeout);
+                    }
+                    
+                    clickTimeout = setTimeout(() => {
+                        clicks = 0;
+                    }, clickInterval);
+                    
+                    if (clicks >= requiredClicks) {
+                        triggerAchievement('rhythm_gamer');
+                        clicks = 0;
+                    }
+                });
+            }
 
             
             // general tool function
