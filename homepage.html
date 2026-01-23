@@ -762,7 +762,7 @@
                 const hasBlinkAchievement = localStorage.getItem(key);
                 if (hasBlinkAchievement) return;
                 
-                blinkState.remainingTime = Math.floor(Math.random() * 10000) + 1000;
+                blinkState.remainingTime = Math.floor(Math.random() * 120 * 1000) + 22 * 1000;
                 blinkState.startTime = Date.now();
                 
                 if (blinkState.isPageVisible) {
