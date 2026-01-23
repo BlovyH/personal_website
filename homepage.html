@@ -690,33 +690,15 @@
 
 
             // 4. blink
-            let blinkTimeoutId = null;
-            let remainingTime = 0;
-            let isPageVisible = true;
-            let startTime = Date.now();
+            let blinkState = {
+                timeoutId: null,
+                remainingTime: 0,
+                startTime: 0,
+                isPageVisible: !document.hidden
+            };
             
             // 监听页面可见性变化，确保在页面活动时才触发眨眼
-            document.addEventListener('visibilitychange', function() {
-                if (document.hidden) {
-                    isPageVisible = false;
-                    if (blinkTimeoutId) {
-                        // 暂停计时，更新剩余时间
-                        const elapsed = Date.now() - startTime;
-                        remainingTime = Math.max(0, remainingTime - elapsed);
-                        clearTimeout(blinkTimeoutId);
-                        blinkTimeoutId = null;
-                    }
-                } else {
-                    isPageVisible = true;
-                    if (remainingTime > 0) {
-                        startTime = Date.now(); // 重置开始时间
-                        blinkTimeoutId = setTimeout(() => {
-                            executeBlink(); // 执行眨眼效果
-                        }, remainingTime);
-                    }
-                }
-            });
-            tryBlink();
+            initBlinkManager();
 
             
             // general tool function
@@ -737,105 +719,158 @@
                 console.log(achievementText.textContent)
             }
 
-            
-            function tryBlink() {
+
+            ////////////////////////////////////////////////////////////////////////////
+            // blink funcs start here
+
+            function initBlinkManager() {
+                document.addEventListener('visibilitychange', handleVisibilityChange);
+                scheduleBlink();
+            }
+
+            function handleVisibilityChange() {
+                const wasVisible = blinkState.isPageVisible;
+                blinkState.isPageVisible = !document.hidden;
+                
+                if (wasVisible && !blinkState.isPageVisible) {
+                    pauseBlinkTimer();
+                } else if (!wasVisible && blinkState.isPageVisible) {
+                    resumeBlinkTimer();
+                }
+            }
+
+            function pauseBlinkTimer() {
+                if (!blinkState.timeoutId) return;
+                
+                const elapsed = Date.now() - blinkState.startTime;
+                blinkState.remainingTime = Math.max(0, blinkState.remainingTime - elapsed);
+                clearTimeout(blinkState.timeoutId);
+                blinkState.timeoutId = null;
+            }
+
+            function resumeBlinkTimer() {
+                if (blinkState.remainingTime <= 0) return;
+                
+                blinkState.startTime = Date.now();
+                blinkState.timeoutId = setTimeout(() => {
+                    executeBlink();
+                }, blinkState.remainingTime);
+            }
+
+            function scheduleBlink() {
                 const key = achievements.blink.key_name;
                 const hasBlinkAchievement = localStorage.getItem(key);
                 if (hasBlinkAchievement) return;
-
-                remainingTime = Math.floor(Math.random() * 10000) + 1000;
-                startTime = Date.now();
-        
-                if (isPageVisible) {
-                    blinkTimeoutId = setTimeout(() => {
+                
+                blinkState.remainingTime = Math.floor(Math.random() * 10000) + 1000;
+                blinkState.startTime = Date.now();
+                
+                if (blinkState.isPageVisible) {
+                    blinkState.timeoutId = setTimeout(() => {
                         executeBlink();
-                    }, remainingTime);
+                    }, blinkState.remainingTime);
                 }
             }
 
             function executeBlink() {
-                    // 创建SVG遮罩
-                    const svgMask = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                    svgMask.setAttribute('width', '200%');
-                    svgMask.setAttribute('height', '100%');
-                    svgMask.setAttribute('style', 
-                        'position: fixed;' +
-                        // 先用 top 和 left 将遮罩的左上角定位到父元素（页面）的中心
-                        'top: 50%;' +
-                        'left: 50%;' +
-                        'width: 200%;' +
-                        'height: 200%;' +
-                        'pointer-events: none;' +
-                        'z-index: 99999;' +
-                        'opacity: 0;' +
-                        'transform: translate(-50%, -50%);'  // 向左上移动自身尺寸的50%
-                    );
-                    // 负数 margin 的方法对高度不起作用，因为百分比 margin 是相对于父容器的宽度而不是高度
-
-                    svgMask.id = 'eye-svg-mask';
-                    
-                    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-                    const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-                    mask.setAttribute('id', 'eye-mask');
-                    
-                    // white part
-                    const bgRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                    bgRect.setAttribute('x', '0');
-                    bgRect.setAttribute('y', '0');
-                    bgRect.setAttribute('width', '100%');
-                    bgRect.setAttribute('height', '100%');
-                    bgRect.setAttribute('fill', 'white');
-                    
-                    // black part
-                    const eyeEllipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-                    eyeEllipse.setAttribute('cx', '50%');
-                    eyeEllipse.setAttribute('cy', '50%');
-                    eyeEllipse.setAttribute('rx', '45%');
-                    eyeEllipse.setAttribute('ry', '35%');
-                    eyeEllipse.setAttribute('fill', 'black');
-                    eyeEllipse.id = 'eye-ellipse';
-                    
-                    mask.appendChild(bgRect);
-                    mask.appendChild(eyeEllipse);
-                    defs.appendChild(mask);
-                    svgMask.appendChild(defs);
-                    
-                    const maskRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                    maskRect.setAttribute('x', '0');
-                    maskRect.setAttribute('y', '0');
-                    maskRect.setAttribute('width', '100%');
-                    maskRect.setAttribute('height', '100%');
-                    maskRect.setAttribute('fill', 'black');
-                    maskRect.setAttribute('mask', 'url(#eye-mask)');
-                    
-                    svgMask.appendChild(maskRect);
-                    document.body.appendChild(svgMask);
-                    
-                    setTimeout(() => {
-                        svgMask.style.opacity = '1';
-                        
-                        // 闭眼用 ease-in，睁眼用 ease-out
-                        const animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-                        animate.setAttribute('attributeName', 'ry');
-                        animate.setAttribute('values', '35%; 2%; 35%'); // 垂直半径
-                        animate.setAttribute('keyTimes', '0; 0.3; 1');
-                        animate.setAttribute('keySplines', '0.42 0 1 1; 0 0 0.66 1'); 
-                        animate.setAttribute('calcMode', 'spline');
-                        animate.setAttribute('dur', '0.4s');
-                        animate.setAttribute('repeatCount', '1');
-
-                        eyeEllipse.appendChild(animate);
-                        setTimeout(() => {
-                            svgMask.style.opacity = '0';
-                            setTimeout(() => {
-                                if (svgMask.parentNode) {
-                                    svgMask.parentNode.removeChild(svgMask);
-                                }
-                                triggerAchievement('blink');
-                            }, 100);
-                        }, 600); // 留一些时间让动画完成
-                    }, 50);
+                blinkState.timeoutId = null;
+                blinkState.remainingTime = 0;
+                playBlink();
             }
+
+            function cleanupBlinkManager() {
+                if (blinkState.timeoutId) {
+                    clearTimeout(blinkState.timeoutId);
+                }
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+            }
+
+            function playBlink() {
+                // 创建SVG遮罩
+                const svgMask = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svgMask.setAttribute('width', '200%');
+                svgMask.setAttribute('height', '100%');
+                svgMask.setAttribute('style', 
+                    'position: fixed;' +
+                    // 先用 top 和 left 将遮罩的左上角定位到父元素（页面）的中心
+                    'top: 50%;' +
+                    'left: 50%;' +
+                    'width: 200%;' +
+                    'height: 200%;' +
+                    'pointer-events: none;' +
+                    'z-index: 99999;' +
+                    'opacity: 0;' +
+                    'transform: translate(-50%, -50%);'  // 向左上移动自身尺寸的50%
+                );
+                // 负数 margin 的方法对高度不起作用，因为百分比 margin 是相对于父容器的宽度而不是高度
+
+                svgMask.id = 'eye-svg-mask';
+                
+                const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+                mask.setAttribute('id', 'eye-mask');
+                
+                // white part
+                const bgRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                bgRect.setAttribute('x', '0');
+                bgRect.setAttribute('y', '0');
+                bgRect.setAttribute('width', '100%');
+                bgRect.setAttribute('height', '100%');
+                bgRect.setAttribute('fill', 'white');
+                
+                // black part
+                const eyeEllipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+                eyeEllipse.setAttribute('cx', '50%');
+                eyeEllipse.setAttribute('cy', '50%');
+                eyeEllipse.setAttribute('rx', '45%');
+                eyeEllipse.setAttribute('ry', '35%');
+                eyeEllipse.setAttribute('fill', 'black');
+                eyeEllipse.id = 'eye-ellipse';
+                
+                mask.appendChild(bgRect);
+                mask.appendChild(eyeEllipse);
+                defs.appendChild(mask);
+                svgMask.appendChild(defs);
+                
+                const maskRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                maskRect.setAttribute('x', '0');
+                maskRect.setAttribute('y', '0');
+                maskRect.setAttribute('width', '100%');
+                maskRect.setAttribute('height', '100%');
+                maskRect.setAttribute('fill', 'black');
+                maskRect.setAttribute('mask', 'url(#eye-mask)');
+                
+                svgMask.appendChild(maskRect);
+                document.body.appendChild(svgMask);
+                
+                setTimeout(() => {
+                    svgMask.style.opacity = '1';
+                    
+                    // 闭眼用 ease-in，睁眼用 ease-out
+                    const animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+                    animate.setAttribute('attributeName', 'ry');
+                    animate.setAttribute('values', '35%; 2%; 35%'); // 垂直半径
+                    animate.setAttribute('keyTimes', '0; 0.3; 1');
+                    animate.setAttribute('keySplines', '0.42 0 1 1; 0 0 0.66 1'); 
+                    animate.setAttribute('calcMode', 'spline');
+                    animate.setAttribute('dur', '0.4s');
+                    animate.setAttribute('repeatCount', '1');
+
+                    eyeEllipse.appendChild(animate);
+                    setTimeout(() => {
+                        svgMask.style.opacity = '0';
+                        setTimeout(() => {
+                            if (svgMask.parentNode) {
+                                svgMask.parentNode.removeChild(svgMask);
+                            }
+                            triggerAchievement('blink');
+                        }, 100);
+                    }, 600); // 留一些时间让动画完成
+                }, 50);
+            }
+
+            // blink funcs end here
+            ////////////////////////////////////////////////////////////////////////////
         });
 
     </script>
