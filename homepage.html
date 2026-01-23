@@ -690,6 +690,32 @@
 
 
             // 4. blink
+            let blinkTimeoutId = null;
+            let remainingTime = 0;
+            let isPageVisible = true;
+            let startTime = Date.now();
+            
+            // 监听页面可见性变化，确保在页面活动时才触发眨眼
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    isPageVisible = false;
+                    if (blinkTimeoutId) {
+                        // 暂停计时，更新剩余时间
+                        const elapsed = Date.now() - startTime;
+                        remainingTime = Math.max(0, remainingTime - elapsed);
+                        clearTimeout(blinkTimeoutId);
+                        blinkTimeoutId = null;
+                    }
+                } else {
+                    isPageVisible = true;
+                    if (remainingTime > 0) {
+                        startTime = Date.now(); // 重置开始时间
+                        blinkTimeoutId = setTimeout(() => {
+                            executeBlink(); // 执行眨眼效果
+                        }, remainingTime);
+                    }
+                }
+            });
             tryBlink();
 
             
@@ -717,8 +743,17 @@
                 const hasBlinkAchievement = localStorage.getItem(key);
                 if (hasBlinkAchievement) return;
 
-                const randomWaitTime = Math.floor(Math.random() * 10000) + 1000;
-                setTimeout(() => {
+                remainingTime = Math.floor(Math.random() * 10000) + 1000;
+                startTime = Date.now();
+        
+                if (isPageVisible) {
+                    blinkTimeoutId = setTimeout(() => {
+                        executeBlink();
+                    }, remainingTime);
+                }
+            }
+
+            function executeBlink() {
                     // 创建SVG遮罩
                     const svgMask = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                     svgMask.setAttribute('width', '200%');
@@ -800,7 +835,6 @@
                             }, 100);
                         }, 600); // 留一些时间让动画完成
                     }, 50);
-                }, randomWaitTime);
             }
         });
 
