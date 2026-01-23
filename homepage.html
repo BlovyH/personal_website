@@ -607,6 +607,14 @@
                 <strong>【進捗達成!】</strong> あっ、目がちょっと乾くな<br>
                 <strong>&nbsp;[Achievement get!]</strong> Hmm...my eyes are a bit dry
                 `,
+            },
+            'contact': {
+                key_name: 'achievement_contact',
+                description: `
+                <strong>【获得成就！】</strong> 非常感谢！<br>
+                <strong>【進捗達成!】</strong> ありがとうございます！<br>
+                <strong>&nbsp;[Achievement get!]</strong> Thank you very much!
+                `,
             }
         };
 
@@ -699,6 +707,23 @@
             
             // 监听页面可见性变化，确保在页面活动时才触发眨眼
             initBlinkManager();
+
+            
+            // 5. contact
+            // 稍微延迟一点打开，让用户先看到成就框
+            const contactContainer = document.querySelector('.contact-links');
+            contactContainer.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                    event.preventDefault();
+                    const linkElement = event.target.closest('a');
+
+                    triggerAchievement('contact');
+
+                    setTimeout(() => {
+                        window.open(linkElement.href, '_blank');
+                    }, 1222); 
+                }
+            });
 
             
             // general tool function
