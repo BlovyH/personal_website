@@ -17,14 +17,43 @@
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "蓝碱 | Blovy | らんけん - illustrator, back-end programmer",
-            "url": "https://blovy.art",
-            "description": "蓝碱 | Blovy | らんけん - illustrator, back-end programmer",
-            "author": {
+            "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://blovy.art/#website",
+                "name": "Blovy - Illustrator & Back-end Programmer",
+                "description": "Digital artist and back-end programmer creating illustrations, interactive art, and web experiences. デジタルアーティスト兼プログラマー、イラストレーションとインタラクティブアートを制作。数字艺术家兼程序员，创作插画与交互艺术。",
+                "url": "https://blovy.art",
+                "inLanguage": ["en", "ja", "zh"],
+                "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                    "@type": "EntryPoint",
+                    "urlTemplate": "https://blovy.art/search?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+                }
+            },
+            {
                 "@type": "Person",
-                "name": "蓝碱"
+                "@id": "https://blovy.art/#person",
+                "name": "Blovy",
+                "alternateName": ["蓝碱", "らんけん"],
+                "description": "Illustrator and back-end programmer creating digital art and interactive experiences. Available for commissions and collaborations.",
+                "url": "https://blovy.art",
+                "sameAs": [
+                "https://twitter.com/blovyh",
+                "https://bsky.app/profile/blovy.bsky.social",
+                "https://space.bilibili.com/160911011",
+                "https://www.pixiv.net/users/118581129",
+                "https://medibang.com/u/Blovy/",
+                "https://www.xiaohongshu.com/user/profile/670bdcfc000000001d0300c7"
+                ],
+                "knowsLanguage": ["zh-CN", "ja", "en"],
+                "jobTitle": ["Illustrator", "Back-end Programmer"],
+                "knowsAbout": ["Digital Art", "Web Development", "Interactive Art", "Illustration"]
             }
+            ]
         }
     </script>
 
