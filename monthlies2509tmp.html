@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthlies2509</title>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "VisualArtwork",
+            "name": "山气日夕佳，飞鸟相与还",
+            "creator": {
+                "@type": "Person",
+                "name": "蓝碱/Blovy/らんけん"
+            },
+            "dateCreated": "2025-09",
+            "artform": "digital art",
+            "description": "「光が死んだ夏」同人イラスト",
+            "keywords": "光が死んだ夏,同人,illustration,イラスト"
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <p class="title">
+            <span class="tag">&lt;Monthlies 2509&gt;</span>
+            <span class="subtitle"> -- 山气日夕佳，飞鸟相与还</span>
+        </p>
+        <div class="button">
+            <button id="back"
+            onclick="window.open('https://www.blovy.art/', '_blank')">
+            <span style="font-size: 16px;">🏠 </span>返回主页</button>
+            <button id="video"
+                onclick="window.open('https://space.bilibili.com/160911011', '_blank')">
+                缩时</button>
+            <button id="close" style="font-weight: bolder;">×</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="image">
+		    <img src="/monthlies/2509.png" alt="2509">
+	    </div>
+        <div class="dialog">
+            <div class="dialogText">
+                <p>题目出自陶渊明的《饮酒（其五）》。
+                    我没点明但隐含的意思，当然还包括它的下一句“此中有真意，欲辨已忘言”。</p>
+                <p>一小片树影打在“光”的右眼，阴影中那只眼的瞳孔不似非人之物的鲜红，
+                    恍惚中有些逝者的影子。它是一种DejaVu，也表明两人关系是建立在一种扭曲的基础上，
+                    这个“往日之影”在以后的日子里也会不时浮现。</p>
+                <p>关于配乐 Like I Do - Minipop，这是我小时候印象比较深刻的一首歌。
+                    歌词似乎可以精妙地描绘佳纪对两个光的、以及“光”对佳纪的感情，算是一种对歌曲的再解读。</p>
+                <p>还想表达的一处是两人手指的位置关系：小怪物的小指在上面，像表示约定的拉勾，
+                    我想指代由他的印刻现象发起的“孩童之誓”（故事的开头）；无名指则是佳纪的手指搭在上面，
+                    意味着他开始主动接纳、引导这份“少年之诺”（关系的发展）。</p>
+            </div>
+            <img src="https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.1/personal_website/ui/dialog_next.png" alt="next" id="nextIndicator">
+        </div>
+    </div>
+    <div class="toolbar">
+        <div class="toolbar-content">
+            我还写了……
+            <button id="tool-1" onclick="window.open('https://www.bilibili.com/read/cv42576548/')">漫评</button>
+            <button id="tool-2" onclick="window.open('https://blovy.art/documents/winter_movie')">同人文</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dialogText = document.querySelector('.dialogText');
+    const nextIndicator = document.getElementById('nextIndicator');
+    
+    document.getElementById('close').addEventListener('click', function () {
+        window.close();
+    })
+
+
+    // scrollpos check
+    dialogText.addEventListener('scroll', function() {
+        if (dialogText.scrollTop + dialogText.clientHeight >= dialogText.scrollHeight - 5) {
+            nextIndicator.style.display = 'none';
+        } else {
+            nextIndicator.style.display = 'block';
+        }
+    });
+});
+</script>
+
+<style>
+    :root {
+        --color-background: #1d2b21;
+        --color-foreground: #c1c6cb;
+        --color-foreground-sub: #8996a2;
+    }
+
+    @font-face {
+        font-family: 'pixel-10px-mono';
+        src: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.1/personal_website/fonts/fusion-pixel-10px-monospaced-zh_hans.ttf');
+
+    }
+
+    @media screen and (max-width: 1024px) {
+        body {
+            zoom: calc(100vw / 1024px);
+            min-width: 1024px;
+        }
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        height: 100vh;
+        background-color: #000;
+        margin: 0;
+        color: var(--color-foreground);
+        font-family: 'pixel-10px-mono';
+        user-select: none;
+        zoom: 1;
+    }
+    
+    .container {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 90%;
+        height: 85%;
+        border: var(--color-foreground) 6px double;
+        background-color: var(--color-background);
+        padding: 20px;
+        margin: 0 auto;
+        margin-top: 40px;
+        box-sizing: border-box;
+    }
+
+    .header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 6px 20px;
+        box-sizing: border-box;
+    }
+
+    .title {
+        display: flex;
+        flex-wrap: wrap;
+        align-self: flex-start;
+        align-items: center;
+        left: 32px;
+        filter: brightness(1.5);
+    }
+    
+    .tag {
+        font-size: 50px;
+        margin: 0;
+    }
+    
+    .subtitle {
+        font-size: 32px;
+        margin: 0;
+    }
+
+    .toolbar {
+        position: absolute;
+        top: -240px;
+        width: 500px;
+        height: 220px;
+        max-width: 100%;
+        font-size: 25px;
+
+        /* 9-patch fixed area (urdl) */
+        border-width: 5px 6px;
+        border-style: solid;
+        border-color: transparent;
+        border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.5/personal_website/ui/button_bg.png');
+        border-image-width: 20px;
+        /* 9-patch streched area (urdl) */
+        border-image-slice: 6 6 5 6 fill;
+        border-image-repeat: repeat;
+        padding: 8px 10px 12px 15px;
+        box-sizing: border-box;
+        transition: 0.2s;
+        image-rendering: pixelated;
+    }
+
+    .toolbar-content {
+        position: absolute;
+        bottom: 8px;
+    }
+
+    .button {
+        margin-left: auto;
+    }
+
+    button {
+        width: max-content;
+        background: transparent;
+        border: none;
+        padding: 10px;
+
+        color: var(--color-foreground);
+        font-family: 'pixel-10px-mono';
+        font-size: 22px;
+
+        /* 9-patch fixed area (urdl) */
+        border-width: 5px 6px;
+        border-style: solid;
+        border-color: transparent;
+        border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.5/personal_website/ui/button_bg.png');
+        border-image-width: 20px;
+        /* 9-patch streched area (urdl) */
+        border-image-slice: 6 6 5 6 fill;
+        border-image-repeat: repeat;
+        padding: 8px 10px 12px 15px;
+        box-sizing: border-box;
+        transition: 0.2s;
+        image-rendering: pixelated;
+    }
+
+    .content {
+        flex: 1;
+        height: 100%;
+        margin: 20px 0;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        min-width: 20%;
+        height: 100%;
+        /* 9-patch fixed area (urdl) */
+        border-width: 6px 6px 7px 6px;
+        border-style: solid;
+        border-color: transparent;
+        border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.4/personal_website/ui/image_bg.png');
+        border-image-width: 30px;
+        /* 9-patch streched area (urdl) */
+        border-image-slice: 6 6 7 6 fill;
+        border-image-repeat: repeat;
+        padding: 10px 35px;
+        padding-bottom: 25px;
+        margin: 15px;
+        box-sizing: border-box;
+        transition: 0.2s ease-in-out;
+        image-rendering: pixelated;
+    }
+
+    .image img {
+        height: 100%;
+        object-fit: contain;
+        margin: 0 18%;
+        border: var(--color-foreground-sub) 4px solid;
+        box-sizing: border-box;
+    }
+
+    .dialog {
+        position: relative;
+        height: 100%;
+        flex: 4;
+        display: flex;
+        align-items: center;
+        /* 9-patch fixed area (urdl) */
+        border-width: 6px 5px 7px 6px;
+        border-style: solid;
+        border-color: transparent;
+        border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@master/personal_website/ui/dialog_bg.png');
+        border-image-width: 30px;
+        /* 9-patch streched area (urdl) */
+        border-image-slice: 6 5 7 6 fill;
+        border-image-repeat: repeat;
+        padding: 10px 25px;
+        padding-bottom: 25px;
+        margin: 15px;
+        box-sizing: border-box;
+        transition: 0.2s;
+        image-rendering: pixelated;
+        overflow: hidden;
+    }
+
+    .dialog img#nextIndicator {
+        position: absolute;
+        right: 30px;
+        bottom: 15px;
+        filter: brightness(1.5);
+        animation: float 2s ease-in-out infinite;
+    }
+
+    .dialogText {
+        height: 90%;
+        font-size: 24px;
+        line-height: 1.6;
+        overflow: scroll;
+        overscroll-behavior: auto;
+        scroll-snap-type: y proximity;
+        
+    }
+
+    .dialogText>p:first-child {
+        margin-top: 0;
+    }
+
+    .dialogText>p:last-child {
+        margin-bottom: 0;
+    }
+
+    .dialogText::-webkit-scrollbar {
+        width: 8px;
+        background-color: transparent;
+    }
+    
+    .dialogText::-webkit-scrollbar-thumb {
+        background-color: var(--color-foreground-sub);
+        display: none;
+    }
+
+    .dialogText::-webkit-scrollbar-corner {
+        display: none;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+    }
+</style>
+</body>
+</html>
+
