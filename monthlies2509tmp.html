@@ -59,7 +59,7 @@
                 <p>* 具体来说是在 NOKIA 5800i Xpress Music 上听到的，这首歌是其预置mv之一。这是我印象深刻的早期手机之一，无论是 Symbian 系统、电阻屏、预置的赛车游戏和 Bounce 3D、带有巨大线控板的专用耳机，还是买机子时送的精美（尽管并不实用）的太阳能透明计算器，都诉说着一段我再也回不去的日子。时间过得真快啊。</p>
                 <p>我当时还非常非常喜欢玩 EA 的 Spore Origins，我特别喜欢那些游来游去的、可以自定义的小怪物。</p>
 
-                <p>By Blovy（藍鹸 | らんけん）</p>
+                <p>By Blovy（蓝碱 | らんけん）</p>
             </div>
             <img src="https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.1/personal_website/ui/dialog_next.png" alt="next" id="nextIndicator">
         </div>
@@ -68,7 +68,7 @@
         <div class="toolbar-content">
             我还写了……
             <button id="tool-1" onclick="window.open('https://www.bilibili.com/read/cv42576548/')">漫评</button>
-            <button id="tool-2" onclick="window.open('https://blovy.art/documents/winter_movie')">同人文</button>
+            <button id="tool-2" onclick="window.open('https://blovy.art/documents/winter_movie')">同人文章</button>
         </div>
     </div>
 </div>
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .toolbar {
         position: absolute;
         top: -240px;
-        width: 500px;
+        width: max-content;
         height: 220px;
         max-width: 100%;
         font-size: 25px;
@@ -193,11 +193,14 @@ document.addEventListener('DOMContentLoaded', function() {
         box-sizing: border-box;
         transition: 0.2s;
         image-rendering: pixelated;
+        
+        display: flex;
+        align-items: flex-end;
     }
 
     .toolbar-content {
-        position: absolute;
-        bottom: 8px;
+        width: 100%;
+        height: fit-content;
     }
 
     .button {
