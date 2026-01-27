@@ -809,9 +809,9 @@
             const requiredClicks = 7;
             const clickInterval = 2222;
             const playPauseBtn = document.getElementById('playPauseBtn');
-            const hasMultiClickAchievement = localStorage.getItem('multi-click-achievement');
+            const hasRGAchievement = localStorage.getItem('achievement_rhythm_gamer');
             
-            if (!hasMultiClickAchievement) {
+            if (!hasRGAchievement) {
                 // 条件：1. 达到所需点击次数 2. 处于播放状态
                 document.addEventListener('click', function(event) {
                     // 播放状态就形式主义地检查一下吧...
