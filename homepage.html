@@ -438,6 +438,69 @@
             text-shadow: #000 2px 2px;
         }
         /* 加载动画结束 */
+
+        /* 摸鱼开始 */
+        #saboru-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        #saboru-kun {
+            font-size: 0.8rem;
+            color: #718096;
+            text-align: right;
+            user-select: none;
+            /* 来点 QTE */
+            /* transition: all 0.3s ease-in 0.06s; */
+            transition: all 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s;
+        }
+
+        #saboru-container:hover #saboru-kun {
+            transform: translateX(500px);
+        }
+        /* 摸鱼结束 */
+
+        /* 抓包红温动画开始 */
+        #saboru-kun.saboru-kun-apologizing {
+            color: #ff6b6b !important;
+            animation: saboruApologize 2s ease-out forwards;
+        }
+
+        @keyframes saboruApologize {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+                text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+            }
+            20% {
+                opacity: 1;
+                color: #ff4757 !important;
+                transform: scale(1.1);
+                text-shadow: 0 0 15px rgba(255, 71, 87, 0.8);
+            }
+            40% {
+                opacity: 1;
+                color: #ff6b6b !important;
+                transform: scale(1);
+                text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+            }
+            60% {
+                opacity: 0.8;
+                color: #ff4757 !important;
+                transform: scale(0.9);
+            }
+            80% {
+                opacity: 0.4;
+                color: #ff6b6b !important;
+                transform: scale(0.7);
+            }
+            100% {
+                opacity: 0;
+                color: #ff4757 !important;
+                transform: scale(0.5);
+            }
+        }
+        /* 抓包红温动画结束 */
     </style>
 </head>
 
@@ -615,9 +678,12 @@
         </p>
     </div>
 
-    <div class="bottom-right-note" style="position: fixed; bottom: 10px; right: 10px; font-size: 0.7rem; color: #718096; z-index: 100; text-align: right;">
-        ここでサボるー<br>
-        いや、ばれちゃった
+    <!-- 此处对话不翻译，这个div是个日本人，只会说日语，被抓包了只会鞠躬果咩纳塞，问就是设定如此 -->
+    <!-- 再包一层的目的是优化hover体验，否则hover到字符空隙就弹回来了 -->
+    <div id="saboru-container" style="position: fixed; bottom: 10px; right: 10px;">
+        <div id="saboru-kun" style="position: relative; z-index: 1;">
+            ここでサボるー<br>いや、ばれちゃった
+        </div>
     </div>
 
     <!-- easter egg start -->
@@ -687,6 +753,14 @@
                 <strong>【获得成就！】</strong> 非常感谢！<br>
                 <strong>【進捗達成!】</strong> ありがとうございます！<br>
                 <strong>&nbsp;[Achievement get!]</strong> Thank you very much!
+                `,
+            },
+            'saboru': {
+                key_name: 'achievement_saboru',
+                description: `
+                <strong>【获得成就！】</strong> 禁止摸鱼<br>
+                <strong>【進捗達成!】</strong> サボるな<br>
+                <strong>&nbsp;[Achievement get!]</strong> No slacking
                 `,
             }
         };
@@ -801,6 +875,26 @@
                 }
             });
 
+
+            // 6. サボるくん
+            const saboru = document.getElementById('saboru-kun');
+            const hasSaboruAchievement = localStorage.getItem('achievement_saboru');
+            if (hasSaboruAchievement) {
+                saboru.style.display = 'none';
+            }
+            function noSaboru() { 
+                saboru.innerText = 'ごめんなさい！！！';
+                saboru.classList.add('saboru-kun-apologizing');
+                setTimeout(() => {
+                    saboru.style.visibility = 'hidden';
+                }, 2000);
+            }
+
+            saboru.addEventListener('click', function() {
+                noSaboru();
+                triggerAchievement('saboru');
+            });
+            
             
             // general tool function
             function triggerAchievement(name) {
