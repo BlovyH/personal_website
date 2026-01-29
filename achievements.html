@@ -22,6 +22,7 @@
             background-color: #0c1928;
             color: #e0e7ff;
             padding: 50px;
+            padding-top: 80px;
             min-height: 100vh;
             overflow-x: hidden;
             user-select: none;
@@ -156,16 +157,20 @@
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.799); /* glow */
         }
 
-        button {
+        #back {
             position: absolute;
-            right: 9%;
+            left: 22px;
+            top: 22px;
+            font-size: 1rem;
+            color: #e0e7ff;
+            font-weight: bold;
+        }
+        
+        button {
             width: max-content;
             background: transparent;
             border: none;
             padding: 10px;
-
-            color: var(--color-foreground);
-            font-size: 20px;
             font-weight: bold;
 
             /* 9-patch fixed area (urdl) */
@@ -188,11 +193,11 @@
             margin: 0 auto;
         }
 
-        .section {
+        .achievement-group {
             margin-bottom: 40px;
         }
 
-        .section-title {
+        .subtitle {
             font-size: 1.5rem;
             color: #e0e7ff;
             margin-bottom: 20px;
@@ -330,6 +335,180 @@
             color: #a0aec0;
             font-size: 0.8rem;
         }
+
+
+        /* language switcher starts here */
+        .language-switcher {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            z-index: 10001;
+        }
+
+        .switcher-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: #000;
+            border-radius: 22px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-family: "fusion-pixel-12px", sans-serif;
+            font-size: 1rem;
+            min-width: 90px;
+            justify-content: center;
+            height: 40px;
+            overflow: hidden;
+
+            border-width: 5px 6px;
+            border-style: solid;
+            border-color: transparent;
+            border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.5/personal_website/ui/button_bg.png');
+            border-image-width: 20px;
+            border-image-slice: 6 6 5 6 fill;
+            border-image-repeat: repeat;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+        }
+
+        .switcher-container:hover {
+            height: 120px;
+            background: #1a1a1a;
+            transform: translateY(2px);
+        }
+
+        .switcher-container:hover .bulb,
+        .switcher-container:hover .current-lang {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .bulb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #00ffaa;
+            box-shadow: 
+                0 0 10px rgba(0, 255, 170, 0.8),
+                0 0 20px rgba(0, 255, 170, 0.4),
+                inset 0 0 5px rgba(255, 255, 255, 0.5);
+            animation: crt-pulse 1.5s infinite alternate;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes crt-pulse {
+            0% {
+                opacity: 0.8;
+                transform: scale(0.95);
+                box-shadow: 
+                    0 0 8px rgba(0, 255, 170, 0.6),
+                    0 0 15px rgba(0, 255, 170, 0.3),
+                    inset 0 0 3px rgba(255, 255, 255, 0.3);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.05);
+                box-shadow: 
+                    0 0 15px rgba(0, 255, 170, 1),
+                    0 0 30px rgba(0, 255, 170, 0.5),
+                    inset 0 0 8px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        .current-lang {
+            color: #e0e7ff;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 0 0 3px rgba(0, 255, 170, 0.5);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .lang-options {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            background: transparent;
+            padding: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease 0.1s;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .switcher-container:hover .lang-options {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            padding: 6px 10px;
+            margin: 0 8px;
+            color: #a0aec0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.75rem;
+            text-align: center;
+            background: transparent;
+            border-radius: 2px;
+            opacity: 0;
+            transform: translateY(-5px);
+            border: 1px solid rgba(74, 90, 109, 0.5);
+            box-shadow: none;
+        }
+
+        .switcher-container:hover .lang-option {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lang-option:hover {
+            background: rgba(74, 90, 109, 0.95);
+            color: #e0e7ff;
+            transform: translateX(2px) !important;
+            box-shadow: 0 0 5px rgba(0, 255, 170, 0.3);
+        }
+
+        /* delay animation */
+        .lang-option:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+        .lang-option:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+        .lang-option:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .switcher-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(0, 255, 170, 0.05) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: 3;
+        }
+    /* language switcher ends here */
     </style>
 </head>
 
@@ -337,21 +516,33 @@
     <div class="scanlines"></div>
     <div class="dark-vignette"></div>
 
-    <button id="back" onclick="window.open('/', '_blank')">
-        <span style="font-size: 16px;">🏠 </span>返回主页
+    <button id="back" onclick="window.open('/')">
+        <span id="back-text"><<</span>
     </button>
 
     <div class="container">
         <div class="header">
-            <h1 class="crt-text" data-text="Achievements">ACHIEVEMENTS</h1>
+            <h1 id="page-title"></h1>
+            
+            <div class="language-switcher">
+                <div class="switcher-container">
+                    <div class="bulb"></div>
+                    <span class="current-lang" id="currentLang">中文_简</span>
+                    <div class="lang-options" id="langOptions">
+                        <div class="lang-option" data-lang="zh">中文_简</div>
+                        <div class="lang-option" data-lang="en">ENGLISH</div>
+                        <div class="lang-option" data-lang="ja">日本語</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="section">
-            <h2 class="section-title crt-text" data-text="普通成就"></h2>
+        <div class="achievement-group">
+            <h2 class="subtitle"></h2>
             <div class="achievements-grid" id="normal-achievements"></div>
         </div>
-        <div class="section">
-            <h2 class="section-title crt-text" data-text="特殊成就">X-ACHIEVEMENTS</h2>
+        <div class="achievement-group">
+            <h2 id="x-title" class="subtitle"></h2>
             <div class="achievements-grid" id="special-achievements"></div>
         </div>
 
@@ -393,6 +584,60 @@
     </div>
 
     <script>
+        const langDisplayMap = {
+            'zh': '中文_简',
+            'ja': '日本語',
+            'en': 'ENGLISH'
+        };
+
+        // 暂时这样写，后续整个项目统一管理了要读json的
+        let uiTexts = {
+            'zh': {
+                achievements: '成就们',
+                normalAchievements: '成就',
+                specialAchievements: 'X-成就',
+                copyright: '©Blovy/蓝碱 2026 All Rights Reserved.',
+            },
+            'ja': {
+                achievements: '実績ダチ',
+                normalAchievements: '実績',
+                specialAchievements: 'X-実績',
+            },
+            'en': {
+                achievements: 'ACHIEVEMENTS',
+                normalAchievements: 'Achievements',
+                specialAchievements: 'X-Achievements',
+            }
+        };
+
+        function getUIText(key, lang) {
+            return uiTexts[lang]?.[key] || uiTexts['zh'][key] || key;
+        }
+
+        async function detectUserLanguage() {
+            const storedLang = localStorage.getItem('preferredLanguage');
+            if (storedLang) {
+                return storedLang;
+            }
+            
+            // CORS limit
+            // const response = await fetch('https://ipapi.co/json/');
+            // const data = await response.json();
+            // const country = data.country_code;
+            // if (country === 'CN' || country === 'HK' || country === 'TW' || country === 'MO') {
+            //     return 'zh';
+            // } else if (country === 'JP') {
+            //     return 'ja';
+            // } else {
+            //     return 'en';
+            // }
+
+            const browserLang = navigator.language.substring(0, 2);
+            if (browserLang === 'zh') return 'zh';
+            if (browserLang === 'ja') return 'ja';
+            return 'en';
+        }
+
         async function loadAchievementsConfig() {
             try {
                 const response = await fetch('./achievements_config.json');
@@ -405,32 +650,73 @@
             }
         }
 
-        function renderAchievements(containerId, achievements, prefix) {
+        function renderAchievements(containerId, achievements, prefix, lang) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
 
             achievements.forEach(achievement => {
                 const isUnlocked = localStorage.getItem(achievement.key) === 'true';
                 
-                const cardDiv = document.createElement('div');
-                cardDiv.className = `achievement-card ${isUnlocked ? 'achieved' : 'locked'}`;
+                const achievementCard = document.createElement('div');
+                achievementCard.className = `achievement-card ${isUnlocked ? 'achieved' : 'locked'}`;
                 
-                cardDiv.innerHTML = `
-                    <div class="achievement-title">${achievement.title.zh}</div>
-                    <div class="achievement-desc">${isUnlocked ? achievement.description.zh : ''}</div>
+                const title = achievement.title[lang] || achievement.title['zh'];
+                const description = isUnlocked ? (achievement.description[lang] || achievement.description['zh']) : '';
+
+                achievementCard.innerHTML = `
+                    <div class="achievement-title">${title}</div>
+                    <div class="achievement-desc">${description}</div>
                 `;
                 
-                container.appendChild(cardDiv);
+                container.appendChild(achievementCard);
             });
+        }
+
+        function renderAllAchievements(config, lang) {
+            if (config) {
+                renderAchievements('normal-achievements', config.common, config.prefix.normal, lang);
+                renderAchievements('special-achievements', config.x, config.prefix.x, lang);
+            }
         }
 
         document.addEventListener('DOMContentLoaded', async function() {
             const config = await loadAchievementsConfig();
-            if (config) {
-                renderAchievements('normal-achievements', config.common, config.prefix.normal);
-                renderAchievements('special-achievements', config.x, config.prefix.x);
+        
+            const detectedLang = await detectUserLanguage();
+            const currentLangSpan = document.getElementById('currentLang');
+            if (currentLangSpan) {
+                currentLangSpan.textContent = langDisplayMap[detectedLang];
             }
+            setUITexts(detectedLang);
+            renderAllAchievements(config, detectedLang);
+
+            // language switch
+            const langOptions = document.querySelectorAll('.lang-option');
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    localStorage.setItem('preferredLanguage', selectedLang);
+
+                    currentLangSpan.textContent = langDisplayMap[selectedLang];
+                    setUITexts(selectedLang);
+                    renderAllAchievements(config, selectedLang);
+                });
+            });
         });
+
+        function setUITexts(lang) {
+            // 1
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle) {
+                pageTitle.textContent = getUIText('achievements', lang);
+            }
+            
+            // 2
+            const xTitle = document.getElementById('x-title');
+            if (xTitle) {
+                xTitle.textContent = getUIText('specialAchievements', lang);
+            }
+        }
     </script>
 </body>
 </html>
