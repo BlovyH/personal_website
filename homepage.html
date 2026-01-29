@@ -729,72 +729,28 @@
 
         // console easter egg end
 
+        
+        // 其实我想搞个默认展示文本...
+        const DEFAULT_DISPLAY_CONFIG = {}
 
-        // 后续重构成读配置，html模板和文本分离
-        // 这个键名有点违反 DRY 但我没抽出来，考虑到短期未来可能都只有一处重复，就不过度设计了
-        // 如果真要改键名，记得同步改调用的地方
-        const achievements = {
-            'pronunciation': {
-                key_name: 'achievement_pronunciation',
-                description: `
-                <strong>【获得成就！】</strong> 这个怎么念？<br>
-                <strong>【進捗達成!】</strong> なにこれ、読み方?<br>
-                <strong>&nbsp;[Achievement get!]</strong> Check the pronunciation
-                `,
-            },
-            'developer': {
-                key_name: 'achievement_developer',
-                description: `
-                <strong>【获得成就！】</strong> 你好开发者！<br>
-                <strong>【進捗達成!】</strong> 開発者さん、こんにちは！<br>
-                <strong>&nbsp;[Achievement get!]</strong> Hello developer!
-                `,
-            },
-            'rhythm_gamer': {
-                key_name: 'achievement_rhythm_gamer',
-                description: `
-                <strong>【获得成就！】</strong> 什么音游玩家<br>
-                <strong>【進捗達成!】</strong> あれ、音ゲーマーかな<br>
-                <strong>&nbsp;[Achievement get!]</strong> Oh wow RHYTHM GAMER
-                `,
-            },
-            'blink': {
-                key_name: 'achievement_blink',
-                description: `
-                <strong>【获得成就！】</strong> 啊，眼睛有点干<br>
-                <strong>【進捗達成!】</strong> あっ、目がちょっと乾くな<br>
-                <strong>&nbsp;[Achievement get!]</strong> Hmm...my eyes are a bit dry
-                `,
-            },
-            'contact': {
-                key_name: 'achievement_contact',
-                description: `
-                <strong>【获得成就！】</strong> 非常感谢！<br>
-                <strong>【進捗達成!】</strong> ありがとうございます！<br>
-                <strong>&nbsp;[Achievement get!]</strong> Thank you very much!
-                `,
-            },
-            'saboru': {
-                key_name: 'achievement_saboru',
-                description: `
-                <strong>【获得成就！】</strong> 禁止摸鱼<br>
-                <strong>【進捗達成!】</strong> サボるな<br>
-                <strong>&nbsp;[Achievement get!]</strong> No slacking
-                `,
-            },
-            "x_1": {
-                key_name: "achievement_x_1",
-                description: `
-                <strong>【获得成就！】</strong> 醒醒你老窝被端了<br>
-                <strong>【進捗達成!】</strong> おまえのアジト、バレたぞ<br>
-                <strong>&nbsp;[Achievement get!]</strong> Your secret lair is compromised!
-                `,
+
+        async function loadAchievementsConfig() {
+            try {
+                const response = await fetch('./achievements_config.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const config = await response.json();
+                return config;
+            } catch (error) {
+                return DEFAULT_DISPLAY_CONFIG;
             }
-        };
+        }
 
 
         // neta 成就彩蛋
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
+            const achievements = await loadAchievementsConfig();
             const nameSpan = document.querySelector('.name-general-span');
             const achievementNotification = document.getElementById('achievement-notification');
             const achievementText = document.getElementById('achievement-notification-text');
@@ -808,7 +764,7 @@
                 // 可能可以通过 iframe 等方式解决，参考那些一进去就自动播放BGM的网页，但是太麻烦了，不搞了，之后如果网页能保证用户在这个hover前一定会有一次交互，再说
 
                 hoverTimer = setTimeout(() => {
-                    triggerAchievement('pronunciation');
+                    triggerAchievement('common', 'pronunciation');
                 }, 2222);
             });
     
@@ -824,7 +780,7 @@
             // 2. f12 console
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'F12') {
-                    triggerAchievement('developer');
+                    triggerAchievement('common', 'developer');
                 }
             })
 
@@ -836,7 +792,7 @@
             const requiredClicks = 7;
             const clickInterval = 2222;
             const playPauseBtn = document.getElementById('playPauseBtn');
-            const hasRGAchievement = localStorage.getItem('achievement_rhythm_gamer');
+            const hasRGAchievement = localStorage.getItem(getCacheKeyName('common', 'rhythm_gamer'));
             
             if (!hasRGAchievement) {
                 // 条件：1. 达到所需点击次数 2. 处于播放状态
@@ -865,7 +821,7 @@
                     }, clickInterval);
                     
                     if (clicks >= requiredClicks) {
-                        triggerAchievement('rhythm_gamer');
+                        triggerAchievement('common', 'rhythm_gamer');
                         clicks = 0;
                     }
                 });
@@ -893,7 +849,7 @@
                     const linkElement = event.target.closest('a');
 
                     loading.classList.add('show');
-                    triggerAchievement('contact');
+                    triggerAchievement('common', 'contact');
 
                     setTimeout(() => {
                         window.open(linkElement.href, '_blank');
@@ -905,7 +861,7 @@
 
             // 6. サボるくん
             const saboru = document.getElementById('saboru-kun');
-            const hasSaboruAchievement = localStorage.getItem('achievement_saboru');
+            const hasSaboruAchievement = localStorage.getItem(getCacheKeyName('common', 'saboru'));
             if (hasSaboruAchievement) {
                 saboru.style.display = 'none';
             }
@@ -919,27 +875,8 @@
 
             saboru.addEventListener('click', function() {
                 noSaboru();
-                triggerAchievement('saboru');
+                triggerAchievement('common', 'saboru');
             });
-            
-            
-            // general tool function
-            function triggerAchievement(name) {
-                const achievementInfo = achievements[name];
-                const hasAchieved = localStorage.getItem(achievementInfo.key_name);
-                if (hasAchieved) return;
-
-                localStorage.setItem(achievementInfo.key_name, 'true');
-                achievementText.innerHTML = achievementInfo.description;
-                achievementNotification.classList.add('show');
-                
-                setTimeout(() => {
-                    achievementNotification.classList.remove('show');
-                }, 5000); // 5秒后隐藏
-
-                // 控制台记录 log（就是rpg那种对话记录之类的防skip的东西啦）
-                console.log(achievementText.textContent)
-            }
 
 
             // X-1
@@ -984,7 +921,42 @@
                     }
                 }, 2000);
             }
+            
+            
+            // general tool function
+            function triggerAchievement(category, name) {
+                let achievementItem = null;
+                
+                achievementItem = achievements[category].find(item => item.name == name);
+                prefixes = achievements.prefix[category]; 
+                console.log(prefixes)
 
+                if (achievementItem) {
+                    const desc = `
+                        <strong>${prefixes.zh}</strong> ${achievementItem.title.zh}<br>
+                        <strong>${prefixes.ja}</strong> ${achievementItem.title.ja}<br>
+                        <strong>&nbsp;${prefixes.en}</strong> ${achievementItem.title.en}
+                        `;
+                    const hasAchieved = localStorage.getItem(achievementItem.key);
+                    if (hasAchieved) return;
+
+                    localStorage.setItem(achievementItem.key, 'true');
+                    achievementText.innerHTML = desc;
+                    achievementNotification.classList.add('show');
+                    
+                    setTimeout(() => {
+                        achievementNotification.classList.remove('show');
+                    }, 5000); // 5秒后隐藏
+
+                    // 控制台记录 log（就是rpg那种对话记录之类的防skip的东西啦）
+                    console.log(achievementText.textContent);
+                }
+            }
+
+            function getCacheKeyName(category, name) {
+                achievementItem = achievements[category].find(item => item.name == name);
+                return achievementItem.key;
+            }
 
             ////////////////////////////////////////////////////////////////////////////
             // blink funcs start here
@@ -1024,8 +996,7 @@
             }
 
             function scheduleBlink() {
-                const key = achievements.blink.key_name;
-                const hasBlinkAchievement = localStorage.getItem(key);
+                const hasBlinkAchievement = localStorage.getItem(getCacheKeyName('common', 'blink'));
                 if (hasBlinkAchievement) return;
                 
                 blinkState.remainingTime = Math.floor(Math.random() * 120 * 1000) + 22 * 1000;
@@ -1129,7 +1100,7 @@
                             if (svgMask.parentNode) {
                                 svgMask.parentNode.removeChild(svgMask);
                             }
-                            triggerAchievement('blink');
+                            triggerAchievement('common', 'blink');
                         }, 100);
                     }, 600); // 留一些时间让动画完成
                 }, 50);
