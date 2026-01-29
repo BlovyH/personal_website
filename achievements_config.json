@@ -1,0 +1,198 @@
+{
+  "prefix": {
+    "common": {
+      "zh": "【获得成就！】",
+      "ja": "【実績解除！】",
+      "en": "[Achievement get!]"
+    },
+    "x": {
+      "zh": "【获得X成就！】",
+      "ja": "【X実績解除！】",
+      "en": "[X Achievement get!]"
+    }
+  },
+  "common": [
+    {
+      "id": 1,
+      "name": "pronunciation",
+      "key": "achievement_pronunciation",
+      "title": {
+        "zh": "这个怎么念？",
+        "ja": "なにこれ、読み方?",
+        "en": "Check the pronunciation"
+      },
+      "description": {
+        "zh": "悬停查看Blovy的音标",
+        "ja": "「Blovy」にカーソルを合わせ、カタカナ表記を確認",
+        "en": "Hover over \"Blovy\" for IPA"
+      }
+    }
+    ,{
+      "id": 2,
+      "name": "contact",
+      "key": "achievement_contact",
+      "title": {
+        "zh": "非常感谢！",
+        "ja": "ありがとうございます！",
+        "en": "Thank you very much!"
+      },
+      "description": {
+        "zh": "点击页脚的任一社交链接",
+        "ja": "フッターのソーシャルリンクをいずれかクリック",
+        "en": "Click on any social link in the footer"
+      }
+    }
+    ,{
+      "id": 3,
+      "name": "saboru",
+      "key": "achievement_saboru",
+      "title": {
+        "zh": "禁止摸鱼",
+        "ja": "サボるな",
+        "en": "No slacking"
+      },
+      "description": {
+        "zh": "抓住开溜的摸鱼君",
+        "ja": "サボるくんをつかまえた",
+        "en": "Catch Saboru-kun(the Slacker)"
+      }
+    }
+    ,{
+      "id": 4,
+      "name": "blink",
+      "key": "achievement_blink",
+      "title": {
+        "zh": "啊，眼睛有点干",
+        "ja": "あっ、目がちょっと乾くな",
+        "en": "Hmm...my eyes are a bit dry"
+      },
+      "description": {
+        "zh": "触发眨眼现象",
+        "ja": "まばたきをみた",
+        "en": "Witness a page blink event"
+      }
+    }
+    ,{
+      "id": 5,
+      "name": "rhythm_gamer",
+      "key": "achievement_rhythm_gamer",
+      "title": {
+        "zh": "什么音游玩家",
+        "ja": "あれ、音ゲーマーかな",
+        "en": "Oh wow RHYTHM GAMER"
+      },
+      "description": {
+        "zh": "连续点击页面？次",
+        "ja": "何回クリックするん? 忘れてた",
+        "en": "Combo-click the blank area for ? times"
+      }
+    }
+    ,{
+      "id": 6,
+      "name": "unknown",
+      "key": "achievement_unknown",
+      "title": {
+        "zh": "？？？",
+        "ja": "？？？",
+        "en": "???"
+      },
+      "description": {
+        "zh": "？？？",
+        "ja": "？？？",
+        "en": "???"
+      }
+    }
+    ,{
+      "id": 7,
+      "name": "developer",
+      "key": "achievement_developer",
+      "title": {
+        "zh": "你好开发者！",
+        "ja": "開発者さん、こんにちは！",
+        "en": "Hello developer!"
+      },
+      "description": {
+        "zh": "按下F12键打开开发者工具",
+        "ja": "「F12」を押し、開発者ツールを開く",
+        "en": "Press F12 and open the developer tools"
+      }
+    }
+    ,{
+      "id": 8,
+      "name": "unknown",
+      "key": "achievement_unknown",
+      "title": {
+        "zh": "？？？",
+        "ja": "？？？",
+        "en": "???"
+      },
+      "description": {
+        "zh": "？？？",
+        "ja": "？？？",
+        "en": "???"
+      }
+    }
+    ,{
+      "id": 9,
+      "name": "unknown",
+      "key": "achievement_unknown",
+      "title": {
+        "zh": "？？？",
+        "ja": "？？？",
+        "en": "???"
+      },
+      "description": {
+        "zh": "？？？",
+        "ja": "？？？",
+        "en": "???"
+      }
+    }
+    ,{
+      "id": 10,
+      "name": "unknown",
+      "key": "achievement_unknown",
+      "title": {
+        "zh": "？？？",
+        "ja": "？？？",
+        "en": "???"
+      },
+      "description": {
+        "zh": "？？？",
+        "ja": "？？？",
+        "en": "???"
+      }
+    }
+  ],
+  "x": [
+    {
+      "id": 1,
+      "name": "x_1",
+      "key": "achievement_x_1",
+      "title": {
+        "zh": "醒醒你老窝被端了",
+        "ja": "おまえのアジト、バレたぞ",
+        "en": "Your secret lair is compromised!"
+      },
+      "description": {
+        "zh": "访问成就页面",
+        "ja": "実績リストにアクセスする",
+        "en": "Access the achievement list"
+      }
+    }
+    ,{
+      "id": 2,
+      "name": "x_2",
+      "key": "achievement_x_2",
+      "title": {
+        "zh": "请给我一个成就",
+        "ja": "実績を一つください",
+        "en": "GiveMeAnAchievementPlease"
+      },
+      "description": {
+        "zh": "向控制台要一个成就",
+        "ja": "コンソールに実績をもらう",
+        "en": "Ask the Console to manifest an achievement for you."
+      }
+    }
+  ]
+}

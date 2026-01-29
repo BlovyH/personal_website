@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements - Blovy</title>
+    
+    <style>
+        @font-face {
+            font-family: "fusion-pixel-12px";
+            src: url(https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.7.0/personal_website/fonts/fusion-pixel-12px-monospaced-zh_hans.ttf);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "fusion-pixel-12px", sans-serif;
+        }
+
+        body {
+            background-color: #0c1928;
+            color: #e0e7ff;
+            padding: 50px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        body::-webkit-scrollbar {
+            width: 16px;
+        }
+
+
+        /* CRT filter starts here */
+        .crt-barrel-distortion {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transform: 
+                perspective(1000px) 
+                rotateX(1deg)
+                scale3d(0.99, 0.99, 1);
+            animation: crt-warp 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes crt-warp {
+            0%, 100% {
+                transform: 
+                    perspective(1000px) 
+                    rotateX(-0.2deg) 
+                    scale3d(0.992, 0.992, 1);
+            }
+            50% {
+                transform: 
+                    perspective(1000px) 
+                    rotateX(0.2deg) 
+                    scale3d(0.988, 0.988, 1);
+            }
+        }
+
+        .dark-vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10000;
+            
+            background: radial-gradient(
+                ellipse at center,
+                rgba(0, 0, 0, 0) 30%,
+                rgba(0, 0, 0, 0.4) 70%,
+                rgba(0, 0, 0, 0.7) 100%
+            );
+            mix-blend-mode: multiply;
+            opacity: 0.6;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        /* the first group */
+        .scanlines::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 3px,
+                rgba(255, 255, 255, 0.1) 4px,
+                rgba(255, 255, 255, 0.1) 5px
+            );
+            animation: scanline-move 15s linear infinite;
+            opacity: 0.4;
+        }
+
+        /* the second group */
+        .scanlines::after {
+            content: "";
+            position: absolute;
+            top: -150%;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 5px,
+                rgba(20, 168, 0, 0.2) 8px,
+                rgba(20, 168, 0, 0.2) 6px
+            );
+            animation: scanline-move 20s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes scanline-move {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(50%);
+            }
+        }
+        /* CRT filter ends here */
+
+
+        .header {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.799); /* glow */
+        }
+
+        button {
+            position: absolute;
+            right: 9%;
+            width: max-content;
+            background: transparent;
+            border: none;
+            padding: 10px;
+
+            color: var(--color-foreground);
+            font-size: 20px;
+            font-weight: bold;
+
+            /* 9-patch fixed area (urdl) */
+            border-width: 5px 6px;
+            border-style: solid;
+            border-color: transparent;
+            border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.5/personal_website/ui/button_bg.png');
+            border-image-width: 20px;
+            /* 9-patch streched area (urdl) */
+            border-image-slice: 6 6 5 6 fill;
+            border-image-repeat: repeat;
+            padding: 8px 10px 12px 15px;
+            box-sizing: border-box;
+            transition: 0.2s;
+            image-rendering: pixelated;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #e0e7ff;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #4a5a6d;
+            padding-bottom: 5px;
+        }
+
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .achievement-card {
+            background: #000;
+            border-radius: 22px;
+            padding: 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            max-width: 380px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: default;
+            min-height: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .achieved.achievement-card {
+            background: #3d4f63;
+            border-color: #2c62a9;
+        }
+
+        .locked.achievement-card {
+            opacity: 0.6;
+            background: #1a1a1a;
+        }
+
+        .locked.achievement-card::before {
+            content: '?';
+            position: absolute;
+            top: -5px;
+            left: -6px;
+            right: -6px;
+            bottom: -5px;
+
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        /* same border image 9 patch urdl */
+        .achievement-card,
+        .locked.achievement-card::before {
+            border-width: 5px 6px;
+            border-style: solid;
+            border-color: transparent;
+            border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.5/personal_website/ui/button_bg.png');
+            border-image-width: 20px;
+            border-image-slice: 6 6 5 6 fill;
+            border-image-repeat: repeat;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+        }
+
+        .locked.achievement-card:hover::before {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .achievement-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .locked .achievement-title {
+            color: #a0aec0;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.1s;
+        }
+
+        .locked.achievement-card:hover .achievement-title {
+            opacity: 1;
+        }
+
+        .achieved .achievement-title {
+            color: #5cd6d6;
+        }
+
+        .achievement-desc {
+            font-size: 0.85rem;
+            color: #cbd5e0;
+            line-height: 1.4;
+            position: relative;
+            z-index: 2;
+        }
+
+        .locked .achievement-desc {
+            color: #718096;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .locked.achievement-card:hover .achievement-desc {
+            opacity: 1;
+        }
+
+        .achieved .achievement-desc {
+            color: #a0d6d6;
+        }
+
+        .achieved .question-mark {
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #4a5a6d;
+            color: #a0aec0;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body class="crt-barrel-distortion">
+    <div class="scanlines"></div>
+    <div class="dark-vignette"></div>
+
+    <button id="back" onclick="window.open('/', '_blank')">
+        <span style="font-size: 16px;">🏠 </span>返回主页
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="crt-text" data-text="Achievements">ACHIEVEMENTS</h1>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title crt-text" data-text="普通成就"></h2>
+            <div class="achievements-grid" id="normal-achievements"></div>
+        </div>
+        <div class="section">
+            <h2 class="section-title crt-text" data-text="特殊成就">X-ACHIEVEMENTS</h2>
+            <div class="achievements-grid" id="special-achievements"></div>
+        </div>
+
+        <div class="footer">
+            ©Blovy/蓝碱 2026 All Rights Reserved.
+            <address>Contact: blovysol@gmail.com (Chinese/English please)</address>
+            <div class="contact-links" style="margin: 10px; font-size: 0.85rem; color: #a0aec0;">
+                <a href="https://twitter.com/blovyh" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">X</a> |
+                <a href="https://bsky.app/profile/blovy.bsky.social" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">BlueSky</a> |
+                <a href="https://space.bilibili.com/160911011" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">bilibili</a> |
+                <a href="https://www.pixiv.net/users/118581129" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">Pixiv</a> |
+                <a href="https://medibang.com/u/Blovy/" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">ArtStreet</a> |
+                <a href="https://www.xiaohongshu.com/user/profile/670bdcfc000000001d0300c7" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">小红书</a>
+            </div>
+            <div>
+                <a href="https://github.com/TakWolf/fusion-pixel-font" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">Font: fusion-pixel-12px</a>
+            </div>
+    
+            <div class="tools" style="padding-top: 20px; margin: 10px; font-size: 0.85rem; color: #737e8d;">
+                Code, Build and Deployment Support:
+                <a href="https://vuejs.org/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">VUE3(testing)</a> |
+                <a href="https://nginx.org/en/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Nginx</a> |
+                <a href="https://www.cloudflare.com/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Cloudflare</a>
+            </div>
+            <div class="tools" style="margin: 10px; font-size: 0.85rem; color: #737e8d;">
+                Programs and IDEs:
+                <a href="https://medibangpaint.com/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Medibang</a>,
+                <a href="https://www.aseprite.org/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">aseprite</a> |
+                <a href="https://www.singlecellsoftware.com/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Caustic 3</a>,
+                <a href="https://strudel.cc/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">Strudel(testing)</a> |
+                <a href="https://code.visualstudio.com/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">VSCode</a>,
+                <a href="https://www.jetbrains.com/idea/" target="blank" style="color: #737e8d; text-decoration: none; margin: 0 8px;">IntelliJ IDEA</a>
+            </div>
+            
+            <p style="margin-top: 30px; font-size: 0.7rem; color: #737e8d;">
+                "Blovy" came up to my mind in 2018.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        async function loadAchievementsConfig() {
+            try {
+                const response = await fetch('./achievements_config.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function renderAchievements(containerId, achievements, prefix) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            achievements.forEach(achievement => {
+                const isUnlocked = localStorage.getItem(achievement.key) === 'true';
+                
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `achievement-card ${isUnlocked ? 'achieved' : 'locked'}`;
+                
+                cardDiv.innerHTML = `
+                    <div class="achievement-title">${achievement.title.zh}</div>
+                    <div class="achievement-desc">${isUnlocked ? achievement.description.zh : ''}</div>
+                `;
+                
+                container.appendChild(cardDiv);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const config = await loadAchievementsConfig();
+            if (config) {
+                renderAchievements('normal-achievements', config.common, config.prefix.normal);
+                renderAchievements('special-achievements', config.x, config.prefix.x);
+            }
+        });
+    </script>
+</body>
+</html>

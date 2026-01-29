@@ -413,6 +413,13 @@
         #achievement-notification-text {
             line-height: 1.4;
         }
+
+        #achievement-tips {
+            position: absolute;
+            top: -20px;  /* 用负值表示“超出父容器” */
+            text-shadow: #000 2px 2px;
+            font-weight: bold;
+        }
         /* 成就浮框结束 */
 
 
@@ -537,6 +544,7 @@
     </div>
 
     <div id="achievement-notification" class="achievement-notification">
+        <p id="achievement-tips">For all try adding "achievements" in url</p>
         <div id="achievement-notification-text"></div>
     </div>
 
