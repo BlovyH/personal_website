@@ -773,6 +773,14 @@
                 <strong>【進捗達成!】</strong> サボるな<br>
                 <strong>&nbsp;[Achievement get!]</strong> No slacking
                 `,
+            },
+            "x_1": {
+                key_name: "achievement_x_1",
+                description: `
+                <strong>【获得成就！】</strong> 醒醒你老窝被端了<br>
+                <strong>【進捗達成!】</strong> おまえのアジト、バレたぞ<br>
+                <strong>&nbsp;[Achievement get!]</strong> Your secret lair is compromised!
+                `,
             }
         };
 
@@ -923,6 +931,50 @@
 
                 // 控制台记录 log（就是rpg那种对话记录之类的防skip的东西啦）
                 console.log(achievementText.textContent)
+            }
+
+
+            // X-1
+            const urlParams = new URLSearchParams(window.location.search);
+            const hash = window.location.hash;
+            const path = window.location.pathname;
+            
+            // 兼容URL参数和Hash参数
+            let shouldTriggerAchievement = false;
+            if (urlParams.has('achievements') && 
+                (urlParams.get('achievements') === '' || urlParams.get('achievements') === 'true')) {
+                shouldTriggerAchievement = true;
+            }
+            if (urlParams.has('achievement') && 
+                (urlParams.get('achievement') === '' || urlParams.get('achievement') === 'achievements')) {
+                shouldTriggerAchievement = true;
+            }
+            if (hash.includes('achievements') || hash.includes('achievement')) {
+                shouldTriggerAchievement = true;
+            }
+            
+            if (shouldTriggerAchievement) {
+                const hiddenLink = document.createElement('a');
+                hiddenLink.href = '/achievements';
+                // hiddenLink.target = '_blank';  // 会被浏览器安全策略拦截
+                hiddenLink.style.display = 'none';
+                document.body.appendChild(hiddenLink);
+                
+                loading.classList.add('show');
+                
+                triggerAchievement('x', 'x_1');
+                
+                setTimeout(() => {
+                    hiddenLink.click();
+                    // window.open('/achievements', '_blank'); // 会被浏览器安全策略拦截
+                }, 2222);
+                
+                // ！移除临时链接
+                setTimeout(() => {
+                    if (hiddenLink.parentNode) {
+                        hiddenLink.parentNode.removeChild(hiddenLink);
+                    }
+                }, 2000);
             }
 
 
