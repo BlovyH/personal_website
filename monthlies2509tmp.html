@@ -47,7 +47,7 @@
         <div class="button">
             <button id="back"
             onclick="window.open('https://www.blovy.art/', '_blank')">
-            <span style="font-size: 16px;">🏠 </span>返回主页</button>
+                返回主页</button>
             <button id="video"
                 onclick="window.open('https://space.bilibili.com/160911011', '_blank')">
                 缩时</button>
@@ -83,11 +83,25 @@
     </div>
     <div class="toolbar">
         <div class="toolbar-content">
-            我还写了……
-            <button id="tool-1" onclick="window.open('https://www.bilibili.com/read/cv42576548/')">漫评</button>
-            <button id="tool-2" onclick="window.open('https://blovy.art/documents/winter_movie')">同人文章</button>
+            <span id="more">我还写了……</span>
+            <button id="more-1" onclick="window.open('https://www.bilibili.com/read/cv42576548/')">漫评</button>
+            <button id="more-2" onclick="window.open('https://blovy.art/documents/winter_movie')">同人文章</button>
         </div>
     </div>
+
+    <div class="language-switcher">
+        <span style="font-weight: bold; font-size: 22px;">UI: </span>
+        <div class="switcher-container">
+            <div class="bulb"></div>
+            <span class="current-lang" id="currentLang">中文_简</span>
+            <div class="lang-options" id="langOptions">
+                <div class="lang-option" data-lang="zh">中文_简</div>
+                <div class="lang-option" data-lang="en">ENGLISH</div>
+                <div class="lang-option" data-lang="ja">日本語</div>
+            </div>
+        </div>
+    </div>
+
     <div class="footer">
         Original work ©モクモクれん/KADOKAWA・「光が死んだ夏」製作委員会<br>
         Illustration, codes and comments on this page © Blovy 2026;&nbsp;
@@ -97,10 +111,72 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+const langDisplayMap = {
+    'zh': '中文_简',
+    'ja': '日本語',
+    'en': 'ENGLISH'
+};
+
+// 暂时这样写，后续整个项目统一管理了要读json的
+let uiTexts = {
+    'list': [
+        'back',
+        'video',
+        'more',
+        'more-1',
+        'more-2'
+    ],
+    'zh': {
+        "back": '返回主页',
+        "video": '缩时',
+        "more": '我还写了……',
+        "more-1": '漫评',
+        "more-2": '同人文章',
+    },
+    'ja': {
+        "back": '戻る',
+        "video": 'タイムラプス',
+        "more" : 'その他の...',
+        "more-1": '漫画評論',
+        "more-2": '同人文章'
+    },
+    'en': {
+        "back": "HOMEPAGE",
+        "video": "TIMELAPSE",
+        "more": "MORE...",
+        "more-1": "MANGA COMMENTS",
+        "more-2": "FAN FICTION"
+    }
+};
+
+function getUIText(key, lang) {
+    return uiTexts[lang]?.[key] || uiTexts['zh'][key] || key;
+}
+
+async function detectUserLanguage() {
+    const storedLang = localStorage.getItem('preferredLanguage');
+    if (storedLang) {
+        return storedLang;
+    }
+
+    const browserLang = navigator.language.substring(0, 2);
+    if (browserLang === 'zh') return 'zh';
+    if (browserLang === 'ja') return 'ja';
+    return 'en';
+}
+
+
+document.addEventListener('DOMContentLoaded', async function() {
     const dialogText = document.querySelector('.dialogText');
     const nextIndicator = document.getElementById('nextIndicator');
-    
+
+    const detectedLang = await detectUserLanguage();
+    const currentLangSpan = document.getElementById('currentLang');
+    if (currentLangSpan) {
+        currentLangSpan.textContent = langDisplayMap[detectedLang];
+    }
+    setUITexts(detectedLang);
+
     document.getElementById('close').addEventListener('click', function () {
         window.close();
     })
@@ -114,7 +190,28 @@ document.addEventListener('DOMContentLoaded', function() {
             nextIndicator.style.display = 'block';
         }
     });
+
+    const langOptions = document.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const selectedLang = this.getAttribute('data-lang');
+            localStorage.setItem('preferredLanguage', selectedLang);
+
+            currentLangSpan.textContent = langDisplayMap[selectedLang];
+            setUITexts(selectedLang);
+        });
+    });
 });
+
+function setUITexts(lang) {
+    uiTexts['list'].forEach(key => {
+        const element = document.getElementById(key);
+        if (element) {
+            const text = getUIText(key, lang);
+            element.textContent = text;
+        }
+    });
+}
 </script>
 
 <style>
@@ -387,6 +484,183 @@ document.addEventListener('DOMContentLoaded', function() {
         font-size: 15px;
         bottom: -45px;
     }
+
+
+    /* ======================================================= */
+    /* 这个这么死鬼长还前端铁人三项全齐后续要封装成组件 */
+    /* 可变参数：字号(curr和选项分别) 尺寸 */
+
+    /* language switcher starts here */
+        .language-switcher {
+            position: absolute;
+            top: -80px;
+            right: 22px;
+            z-index: 10001;
+        }
+
+        .switcher-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: #000;
+            border-radius: 22px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 1.1rem;
+            min-width: 90px;
+            justify-content: center;
+            height: 50px;
+            overflow: hidden;
+
+            border-width: 5px 6px;
+            border-style: solid;
+            border-color: transparent;
+            border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.5/personal_website/ui/button_bg.png');
+            border-image-width: 20px;
+            border-image-slice: 6 6 5 6 fill;
+            border-image-repeat: repeat;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+        }
+
+        .switcher-container:hover {
+            height: 120px;
+            background: #1a1a1a;
+            transform: translateY(2px);
+        }
+
+        .switcher-container:hover .bulb,
+        .switcher-container:hover .current-lang {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .bulb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #00ffaa;
+            box-shadow: 
+                0 0 10px rgba(0, 255, 170, 0.8),
+                0 0 20px rgba(0, 255, 170, 0.4),
+                inset 0 0 5px rgba(255, 255, 255, 0.5);
+            animation: crt-pulse 1.5s infinite alternate;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes crt-pulse {
+            0% {
+                opacity: 0.8;
+                transform: scale(0.95);
+                box-shadow: 
+                    0 0 8px rgba(0, 255, 170, 0.6),
+                    0 0 15px rgba(0, 255, 170, 0.3),
+                    inset 0 0 3px rgba(255, 255, 255, 0.3);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.05);
+                box-shadow: 
+                    0 0 15px rgba(0, 255, 170, 1),
+                    0 0 30px rgba(0, 255, 170, 0.5),
+                    inset 0 0 8px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        .current-lang {
+            color: #e0e7ff;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 0 0 3px rgba(0, 255, 170, 0.5);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .lang-options {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            background: transparent;
+            padding: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease 0.1s;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .switcher-container:hover .lang-options {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            padding: 6px 10px;
+            margin: 0 8px;
+            color: #a0aec0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.8rem;
+            text-align: center;
+            background: transparent;
+            border-radius: 2px;
+            opacity: 0;
+            transform: translateY(-5px);
+            border: 1px solid rgba(74, 90, 109, 0.5);
+            box-shadow: none;
+        }
+
+        .switcher-container:hover .lang-option {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lang-option:hover {
+            background: rgba(74, 90, 109, 0.95);
+            color: #e0e7ff;
+            transform: translateX(2px) !important;
+            box-shadow: 0 0 5px rgba(0, 255, 170, 0.3);
+        }
+
+        /* delay animation */
+        .lang-option:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+        .lang-option:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+        .lang-option:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .switcher-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(0, 255, 170, 0.05) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: 3;
+        }
+    /* language switcher ends here */
 </style>
 </body>
 </html>
