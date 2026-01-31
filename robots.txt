@@ -1,0 +1,24 @@
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# others
+User-agent: DiffBot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
