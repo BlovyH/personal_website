@@ -16,7 +16,24 @@
             "dateCreated": "2025-09",
             "artform": "digital art",
             "description": "「光が死んだ夏」同人イラスト",
-            "keywords": "光が死んだ夏,同人,illustration,イラスト"
+            "keywords": "光が死んだ夏,同人,illustration,イラスト",
+            "copyrightHolder": {
+                "@type": "Person",
+                "name": "Blovy"
+              },
+            "copyrightYear": "2026",
+            "isBasedOn": {
+                "@type": "CreativeWork",
+                "name": "光が死んだ夏",
+                "creator": {
+                    "@type": "Organization",
+                    "name": "モクモクれん/KADOKAWA・「光が死んだ夏」製作委員会"
+                }
+            },
+            "usageInfo": {
+                "@type": "DiscussionForumPosting",
+                "text": "This is a fan-art creation. Unauthorized use of any content from this page for AI training or any commercial purposes is prohibited."
+            }
         }
     </script>
 </head>
@@ -40,7 +57,7 @@
 
     <div class="content">
         <div class="image">
-		    <img src="/monthlies/2509.png" alt="2509">
+		    <img src="/monthlies/2509.png" alt="山气日夕佳，飞鸟相与还（《光が死んだ夏》同人插画） 作者-Blovy">
 	    </div>
         <div class="dialog">
             <div class="dialogText">
@@ -70,6 +87,11 @@
             <button id="tool-1" onclick="window.open('https://www.bilibili.com/read/cv42576548/')">漫评</button>
             <button id="tool-2" onclick="window.open('https://blovy.art/documents/winter_movie')">同人文章</button>
         </div>
+    </div>
+    <div class="footer">
+        Original work ©モクモクれん/KADOKAWA・「光が死んだ夏」製作委員会<br>
+        Illustration, codes and comments on this page © Blovy 2026;&nbsp;
+        This is a fan-art creation. Unauthorized use of any content from this page for AI training or any commercial purposes is prohibited.
     </div>
 </div>
 
@@ -114,6 +136,13 @@ document.addEventListener('DOMContentLoaded', function() {
             min-width: 1024px;
         }
     }
+    
+    /* 神秘的媒体查询参数先别改我也不知道为什么前端好难 */
+    @media screen and (max-width: 1653px) {
+        .footer {
+            bottom: -60px !important;
+        }
+    }
 
     body {
         display: flex;
@@ -139,7 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
         background-color: var(--color-background);
         padding: 20px;
         margin: 0 auto;
-        margin-top: 40px;
+        margin-top: 75px;
+        margin-bottom: 40px; /* for footer */
         box-sizing: border-box;
     }
 
@@ -349,6 +379,13 @@ document.addEventListener('DOMContentLoaded', function() {
         100% {
             transform: translateY(0px);
         }
+    }
+
+    .footer {
+        position: absolute;
+        color: #445251;
+        font-size: 15px;
+        bottom: -45px;
     }
 </style>
 </body>
