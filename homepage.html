@@ -924,8 +924,36 @@
                     }
                 }, 2000);
             }
-            
-            
+
+
+            // x-2
+            function GiveMeAnAchievementPlease() {
+                if (getCacheKeyName('x', 'x_2')) {
+                    return 'YOU ALREADY DONE THAT DONT BE GREEDY';
+                }
+                triggerAchievement('x', 'x_2');
+                localStorage.setItem('x_2', 'true');
+                
+                console.log('%c🎉🎉🎉 CONGRATULATIONS 🎉🎉🎉', 'color: gold; font-size: 20px;');
+                return true;
+            }
+            // 暴露到全局，让控制台可以调用，以及设置别名
+            window.请给我一个成就 = GiveMeAnAchievementPlease;
+            window.GiveMeAnAchievementPlease = GiveMeAnAchievementPlease;
+            window.進捗を一つください = GiveMeAnAchievementPlease;
+
+            // 设置无括号别名（ES5）
+            if (typeof Object.defineProperty !== 'undefined') {
+                createConsoleCommand([
+                'GiveMeAnAchievementPlease',
+                '请给我一个成就', 
+                '進捗を一つください'
+                ], () => {
+                    GiveMeAnAchievementPlease();
+                });
+            }
+
+
             // general tool function
             function triggerAchievement(category, name) {
                 let achievementItem = null;
@@ -1111,8 +1139,34 @@
 
             // blink funcs end here
             ////////////////////////////////////////////////////////////////////////////
-        });
+            
 
+            // JS ES5 Get Accessor Property(whose getter will execute the specified function)
+            function createConsoleCommand(commands, handler) {
+                // singleton
+                const commandArray = typeof commands === 'string' ? [commands] : commands;
+
+                // 控制台在最后一定会输出返回值，没法隐藏。所以暂定为 true
+                const returnValue = true;
+                
+                commandArray.forEach(commandName => {
+                    Object.defineProperty(window, commandName, {
+                        get: function() {
+                            if (getCacheKeyName('x', 'x_2')) {
+                                return 'YOU ALREADY DONE THAT DONT BE GREEDY';
+                            }
+                            handler();
+                            // 注：这样写是因为，如果只设置 getter，那么当带括号正常调用的时候 console 会先试图用 valueOf 获取该 getter 属性的值（即handler的返回值）然后将其作为函数调用，表现为先执行成功然后报错
+                            return function() { return returnValue; };
+                        },
+                        // ！防止被赋值改变
+                        set: () => {},
+                        enumerable: false,
+                        configurable: true
+                    });
+                });
+            }
+        });
     </script>
     <!-- easter egg end -->
 
