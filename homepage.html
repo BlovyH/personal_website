@@ -662,11 +662,12 @@
     </div>
 
     <div class="footer">
-        ©Blovy/蓝碱 2026 All Rights Reserved.
+        ©Blovy/蓝碱 2026 All Rights Reserved.<br>
         Unauthorized use, including for AI training, is prohibited.
         <div class="contact-links" style="margin: 10px; margin-top:22px;  font-size: 0.85rem; color: #a0aec0;">
             <address>Contact: blovysol@gmail.com (Chinese/English please)</address>
-        </div>        <div class="contact-links" style="margin: 10px; font-size: 0.85rem; color: #a0aec0;">
+        </div>
+        <div class="contact-links" style="margin: 10px; font-size: 0.85rem; color: #a0aec0;">
             <a href="https://twitter.com/blovyh" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">X</a> |
             <a href="https://bsky.app/profile/blovy.bsky.social" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">BlueSky</a> |
             <a href="https://space.bilibili.com/160911011" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">bilibili</a> |
@@ -929,9 +930,9 @@
             function triggerAchievement(category, name) {
                 let achievementItem = null;
                 
+                // 加个错误处理
                 achievementItem = achievements[category].find(item => item.name == name);
                 prefixes = achievements.prefix[category]; 
-                console.log(prefixes)
 
                 if (achievementItem) {
                     const desc = `
