@@ -519,6 +519,184 @@
             }
         }
         /* 抓包红温动画结束 */
+
+
+
+        /* ======================================================= */
+        /* 这个这么死鬼长还前端铁人三项全齐后续要封装成组件 */
+        /* 可变参数：字号(curr和选项分别) 尺寸 */
+
+        /* language switcher starts here */
+            .language-switcher {
+                position: absolute;
+                top: 20px;
+                right: 22px;
+                z-index: 10001;
+            }
+
+            .switcher-container {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 8px 15px;
+                background: #000;
+                border-radius: 22px;
+                cursor: pointer;
+                transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+                font-size: 1.1rem;
+                min-width: 90px;
+                justify-content: center;
+                height: 50px;
+                overflow: hidden;
+
+                border-width: 5px 6px;
+                border-style: solid;
+                border-color: transparent;
+                border-image-source: url('https://cdn.jsdelivr.net/gh/BlovyH/Blovy_public_illustrations_for_dl@0.3.5/personal_website/ui/button_bg.png');
+                border-image-width: 20px;
+                border-image-slice: 6 6 5 6 fill;
+                border-image-repeat: repeat;
+                box-sizing: border-box;
+                image-rendering: pixelated;
+            }
+
+            .switcher-container:hover {
+                height: 120px;
+                background: #1a1a1a;
+                transform: translateY(2px);
+            }
+
+            .switcher-container:hover .bulb,
+            .switcher-container:hover .current-lang {
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.2s ease;
+            }
+
+            .bulb {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: #00ffaa;
+                box-shadow: 
+                    0 0 10px rgba(0, 255, 170, 0.8),
+                    0 0 20px rgba(0, 255, 170, 0.4),
+                    inset 0 0 5px rgba(255, 255, 255, 0.5);
+                animation: crt-pulse 1.5s infinite alternate;
+                flex-shrink: 0;
+                position: relative;
+                z-index: 2;
+                transition: all 0.3s ease;
+            }
+
+            @keyframes crt-pulse {
+                0% {
+                    opacity: 0.8;
+                    transform: scale(0.95);
+                    box-shadow: 
+                        0 0 8px rgba(0, 255, 170, 0.6),
+                        0 0 15px rgba(0, 255, 170, 0.3),
+                        inset 0 0 3px rgba(255, 255, 255, 0.3);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1.05);
+                    box-shadow: 
+                        0 0 15px rgba(0, 255, 170, 1),
+                        0 0 30px rgba(0, 255, 170, 0.5),
+                        inset 0 0 8px rgba(255, 255, 255, 0.8);
+                }
+            }
+
+            .current-lang {
+                color: #e0e7ff;
+                font-weight: bold;
+                white-space: nowrap;
+                text-shadow: 0 0 3px rgba(0, 255, 170, 0.5);
+                position: relative;
+                z-index: 2;
+                transition: all 0.3s ease;
+            }
+
+            .lang-options {
+                position: absolute;
+                top: 10px;
+                left: 0;
+                width: 100%;
+                background: transparent;
+                padding: 0;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: all 0.3s ease 0.1s;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .switcher-container:hover .lang-options {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .lang-option {
+                padding: 6px 10px;
+                margin: 0 8px;
+                color: #a0aec0;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 0.8rem;
+                text-align: center;
+                background: transparent;
+                border-radius: 2px;
+                opacity: 0;
+                transform: translateY(-5px);
+                border: 1px solid rgba(74, 90, 109, 0.5);
+                box-shadow: none;
+            }
+
+            .switcher-container:hover .lang-option {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .lang-option:hover {
+                background: rgba(74, 90, 109, 0.95);
+                color: #e0e7ff;
+                transform: translateX(2px) !important;
+                box-shadow: 0 0 5px rgba(0, 255, 170, 0.3);
+            }
+
+            /* delay animation */
+            .lang-option:nth-child(1) {
+                transition-delay: 0.1s;
+            }
+            .lang-option:nth-child(2) {
+                transition-delay: 0.15s;
+            }
+            .lang-option:nth-child(3) {
+                transition-delay: 0.2s;
+            }
+
+            .switcher-container::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    to bottom,
+                    transparent 50%,
+                    rgba(0, 255, 170, 0.05) 50%
+                );
+                background-size: 100% 4px;
+                pointer-events: none;
+                opacity: 0.5;
+                z-index: 3;
+            }
+        /* language switcher ends here */
     </style>
 </head>
 
@@ -529,7 +707,7 @@
     </div>
 
     <div class="header-info">
-        <div class="name-chinese" style="font-size: 1.5rem;">蓝碱</div>
+        <div class="name-chinese" style="font-size: 1.5rem;" id="name_han">蓝碱</div>
         <div class="name-rest" style="font-size: 1.1rem; margin-top: 5px;">
             <span>らんけん</span>
             <span>/</span>
@@ -548,23 +726,29 @@
         <div id="achievement-notification-text"></div>
     </div>
 
-    <div class="multi-lang-info" style="position: fixed; top: 20px; right: 20px; font-size: 0.7rem; color: #718096; text-align: right; z-index: 100;">
-        There will be a button for<br>
-        multi-langs(English, Japanese)<br>
-        translations by myself.<br>
-        <small>にほんごはまだまだです。よろしくおねがいします。</small>
+
+    <div class="language-switcher">
+        <div class="switcher-container">
+            <div class="bulb"></div>
+            <span class="current-lang" id="currentLang">中文_简</span>
+            <div class="lang-options" id="langOptions">
+                <div class="lang-option" data-lang="zh">中文_简</div>
+                <div class="lang-option" data-lang="en">ENGLISH</div>
+                <div class="lang-option" data-lang="ja">日本語</div>
+            </div>
+        </div>
     </div>
 
+
     <div class="main-content">
-        <h3 class="construction-text">このページは準備中です。</h3>
-        <p class="subtitle">PAGE UNDER CONSTRUCTION...</p>
+        <h3 class="construction-text" id="construction-text">このページは準備中です。</h3>
         
         <div class="wechat-sticker-container">
             <div style="display: flex;">
                 <img src="pics/ahogeneko_thumb.png" alt="WeChat Stickers Thumbnail" style="height: 30px; text-align: left;">
                 <div>            
-                    <span class="sticker-trigger">微信表情包</span>
-                    <div style="font-size: 0.8rem; color: #a0aec0; ">WeChat Stickers</div>
+                    <span class="sticker-trigger" id="sticker-title">微信表情包</span>
+                    <div style="font-size: 0.8rem; color: #a0aec0; " id="sticker-subtitle">WeChat Stickers</div>
                 </div>
             </div>
             <div class="sticker-dropdown">
@@ -578,7 +762,7 @@
         </div>
         
         <h2 class="section-title">Monthlies</h2>
-        <div style="font-size: 0.9rem; color: #a0aec0; margin-top: -10px; margin-bottom: 20px;">Click for high-res</div>
+        <div style="font-size: 0.9rem; color: #a0aec0; margin-top: -10px; margin-bottom: 20px;" id="monthlies-tips">Click for high-res</div>
 
         <div class="cards-container">
             <a href="https://blovy.art/gallery/monthlies/2512.png" target="_blank" style="text-decoration: none; color: inherit;">
@@ -586,7 +770,7 @@
                 <img src="2512.png" alt="2512" class="thumbnail">
                 <div class="card-content">
                     <div class="card-subtitle">2025 DECEMBER</div>
-                    <h3 class="card-title">心 #0</h3>
+                    <h3 class="card-title" id="2512-title">心 #0</h3>
                     <p class="card-description"><br><br></p>
                 </div>
             </div>
@@ -621,7 +805,7 @@
                     <div class="card-subtitle">2025 SEPTEMBER</div>
                     <h3 class="card-title">山气日夕佳，飞鸟相与还</h3>
                     <p class="card-description">#同人 #光が死んだ夏 #アニメ放送終了<br></p>
-                    <div class="bookmark-tag">同人文章・コメント</div>
+                    <div class="bookmark-tag" id="bookmark-2509">同人文章・コメント</div>
                 </div>
             </div>
             </a>
@@ -1708,6 +1892,123 @@
     </script>
 
     <!-- 新增简单播放器结束（临时，后续封装成组件） -->
+    
+    <!------------------------------------------->
+    <!------------------------------------------->
+    <!------------------------------------------->
+
+
+
+    <!------------------------------------------->
+    <!------------------------------------------->
+    <!------------------------------------------->
+
+    <!-- 新增多语言开始（临时，后续封装成组件） -->
+    <!-- 这个是最新版的 -->
+    <script>
+        const langDisplayMap = {
+            'zh': '中文_简',
+            'ja': '日本語',
+            'en': 'ENGLISH'
+        };
+
+        // 暂时这样写，后续整个项目统一管理了要读json的
+        let uiTexts = {
+            default: 'en',
+            'zh': {
+                'name_han': '蓝碱',
+                'construction-text': '此页面正在施工中...',
+                'sticker-title': '微信表情包',
+                'sticker-subtitle': '呆毛猫',
+                'monthlies-tips': '点击获取原图',
+                '2512-title': '心 #0',
+                'bookmark-2509': '+ 同人文、漫评',
+                'achievement-tips': '全成就请在地址栏加"achievements"',
+            },
+            'ja': {
+                'name_han': '藍鹸',
+                'construction-text': 'このページは準備中です...',
+                'sticker-title': 'ウィチャットスタンプ',
+                'sticker-subtitle': 'アホゲねこ',
+                'monthlies-tips': 'クリックでオリジナルサイズ',
+                '2512-title': 'ココロ ＃0',
+                'bookmark-2509': '+ 同人文章・コメント',
+                'achievement-tips': 'すべての実績-urlに「achievements」を追加',
+            },
+            'en': {
+                'name_han': '蓝碱',
+                'construction-text': 'UNDER CONSTRUCTION...',
+                'sticker-title': 'WeChat Stickers',
+                'sticker-subtitle': 'Aho-ge Neko',
+                'monthlies-tips': 'Click for high-res',
+                '2512-title': 'HEART #0',
+                'bookmark-2509': '+ FanFiction & MangaComments',
+                'achievement-tips': 'For all try adding "achievements" in url',
+            }
+        };
+
+        // 自动生成避免违反 DRY，这个用于 setUIText 遍历
+        uiTexts.list = Object.keys(uiTexts[uiTexts.default]);
+
+        function getUIText(key, lang) {
+            return uiTexts[lang]?.[key] || uiTexts['zh'][key] || key;
+        }
+
+        async function detectUserLanguage() {
+            const storedLang = localStorage.getItem('preferredLanguage');
+            if (storedLang) {
+                return storedLang;
+            }
+            
+            // CORS limit
+            // const response = await fetch('https://ipapi.co/json/');
+            // const data = await response.json();
+            // const country = data.country_code;
+            // if (country === 'CN' || country === 'HK' || country === 'TW' || country === 'MO') {
+            //     return 'zh';
+            // } else if (country === 'JP') {
+            //     return 'ja';
+            // } else {
+            //     return 'en';
+            // }
+
+            const browserLang = navigator.language.substring(0, 2);
+            if (['zh', 'ja', 'en'].includes(browserLang)) {
+                return browserLang;
+            }
+            return uiTexts.default;
+        }
+
+        const langOptions = document.querySelectorAll('.lang-option');
+        document.addEventListener('DOMContentLoaded', async function() {
+            const detectedLang = await detectUserLanguage();
+            const currentLangSpan = document.getElementById('currentLang');
+            if (currentLangSpan) {
+                currentLangSpan.textContent = langDisplayMap[detectedLang];
+            }
+            setUITexts(detectedLang);
+            langOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    localStorage.setItem('preferredLanguage', selectedLang);
+
+                    currentLangSpan.textContent = langDisplayMap[selectedLang];
+                    setUITexts(selectedLang);
+                });
+            });
+        })
+
+        function setUITexts(lang) {
+            uiTexts.list.forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    const text = getUIText(key, lang);
+                    element.innerHTML = text;
+                }
+            });
+        }
+    </script>
+    <!-- 新增多语言结束（临时，后续封装成组件） -->
 
     <!------------------------------------------->
     <!------------------------------------------->
