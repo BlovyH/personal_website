@@ -381,6 +381,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.3s ease;
+            min-width: 320px;
             max-width: 380px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             cursor: default;
@@ -394,7 +395,7 @@
             /* 9-patch streched area (urdl) */
             border-image-slice: 6 6 5 6 fill;
             border-image-repeat: repeat;
-            padding: 8px 10px 12px 5px;
+            padding: 10px 12px 15px 8px;
             box-sizing: border-box;
             transition: 0.2s;
             image-rendering: pixelated;
@@ -419,6 +420,10 @@
             top: -20px;  /* 用负值表示“超出父容器” */
             text-shadow: #000 2px 2px;
             font-weight: bold;
+        }
+
+        .achievement-desc {
+            opacity: 0.45;
         }
         /* 成就浮框结束 */
 
@@ -936,6 +941,7 @@
 
 
         // neta 成就彩蛋
+        let currentLang; // 预留-组件通信（不过好像之后用 i18n 库是响应式的，都不用考虑这个问题了）
         document.addEventListener('DOMContentLoaded', async function() {
             const achievements = await loadAchievementsConfig();
             const nameSpan = document.querySelector('.name-general-span');
@@ -1148,9 +1154,8 @@
 
                 if (achievementItem) {
                     const desc = `
-                        <strong>${prefixes.zh}</strong> ${achievementItem.title.zh}<br>
-                        <strong>${prefixes.ja}</strong> ${achievementItem.title.ja}<br>
-                        <strong>&nbsp;${prefixes.en}</strong> ${achievementItem.title.en}
+                        <strong>${prefixes[currentLang]}</strong> ${achievementItem.title[currentLang]}<br>
+                        <small class='achievement-desc'>${achievementItem.description[currentLang]}</small>
                         `;
                     const hasAchieved = localStorage.getItem(achievementItem.key);
                     if (hasAchieved) return;
@@ -1982,6 +1987,7 @@
         const langOptions = document.querySelectorAll('.lang-option');
         document.addEventListener('DOMContentLoaded', async function() {
             const detectedLang = await detectUserLanguage();
+            currentLang = detectedLang;
             const currentLangSpan = document.getElementById('currentLang');
             if (currentLangSpan) {
                 currentLangSpan.textContent = langDisplayMap[detectedLang];
@@ -1994,6 +2000,7 @@
 
                     currentLangSpan.textContent = langDisplayMap[selectedLang];
                     setUITexts(selectedLang);
+                    currentLang = selectedLang;
                 });
             });
         })
