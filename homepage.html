@@ -156,6 +156,20 @@
             overflow: hidden;
             box-shadow: 0 6px 12px rgba(0,0,0,0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            /* 9-patch fixed area (urdl) */
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent;
+            border-image-source: url('./ui/card_bg.png');
+            border-image-width: 20px;
+            /* 9-patch streched area (urdl) */
+            border-image-slice: 5 fill;
+            border-image-repeat: repeat;
+            padding: 0px 5px 0px 9px;
+            box-sizing: border-box;
+            transition: 0.2s;
+            image-rendering: pixelated;
         }
 
         .card:hover {
@@ -854,7 +868,7 @@
         ©Blovy/蓝碱 2026 All Rights Reserved.<br>
         Unauthorized use, including for AI training, is prohibited.
         <div class="contact-email" style="margin: 10px; margin-top:22px;  font-size: 0.85rem; color: #a0aec0;">
-            <address>Contact: blovysol@gmail.com (Chinese/English please)</address>
+            <address>Contact: blovysol@gmail.com (Chinese/English/Japanese please)</address>
         </div>
         <div class="contact-links" style="margin: 10px; font-size: 0.85rem; color: #a0aec0;">
             <a href="https://twitter.com/blovyh" target="blank" style="color: #a0aec0; text-decoration: none; margin: 0 8px;">X</a> |
@@ -1130,14 +1144,14 @@
             // 暴露到全局，让控制台可以调用，以及设置别名
             window.请给我一个成就 = GiveMeAnAchievementPlease;
             window.GiveMeAnAchievementPlease = GiveMeAnAchievementPlease;
-            window.進捗を一つください = GiveMeAnAchievementPlease;
+            window.実績を一つください = GiveMeAnAchievementPlease;
 
             // 设置无括号别名（ES5）
             if (typeof Object.defineProperty !== 'undefined') {
                 createConsoleCommand([
                 'GiveMeAnAchievementPlease',
                 '请给我一个成就', 
-                '進捗を一つください'
+                '実績を一つください'
                 ], () => {
                     GiveMeAnAchievementPlease();
                 });
